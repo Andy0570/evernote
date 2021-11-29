@@ -4,7 +4,7 @@
 
 ![](https://upload-images.jianshu.io/upload_images/2648731-803d69a9e4b32002.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-漂亮的车牌，是么？
+漂亮的车牌，不是么？
 
 在本讲座中，我们将窥探 Objective-C 引擎：对象是如何在内存中表示的，以及消息发送是如何工作的。
 
@@ -15,6 +15,7 @@
 ```c
 int i;
 i = 0xdeadbeef;
+// de ad be ef
 ```
 
 这是一个简单的例子：这是在 32 位机器上用 C 语言表示一个 `int` 的方法。
@@ -75,9 +76,9 @@ p.y = 2.0;
 //    x:1.0      y:2.0
 ```
 
-这是一个稍微复杂的例子，并且你之前一定用过了上百次：Cocoa 的 `NSPoint` 结构体，它由两个 `CGFloat` 类型组成。 (在 32 位平台上，一个 `CGFloat` 是 `float` 类型的 `typedef` 宏定义，在 64 位平台上是 `double` 类型)。那么，一个有多个字段的结构体类型会是什么样子的呢？简单来说，就是内存中一个接一个的值；也就是连续的值（还有一些额外的值对齐和填充规则，这些规则描述很无聊，与本讲座无关）。
+这是一个稍微复杂的例子，并且你之前一定用过了上百次：Cocoa 的 `NSPoint` 结构体，它由两个 `CGFloat` 类型组成。 在 32 位平台上，一个 `CGFloat` 是 `float` 类型的 `typedef` 宏定义，在 64 位平台上是 `double` 类型。那么，一个有多个字段的结构体类型会是什么样子呢？简单来说，就是内存中一个接一个的值；也就是连续的值（还有一些额外的值对齐和填充规则，这些规则描述很无聊，与本讲座无关）。
 
-(请注意，浮点数类型（`float`）在内存中与常规的 `int` 类型完全不同：如果你有兴趣，有两篇文章非常值得一读："[What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)"，以及来自 Jim Blinn 的更难找到但非常值得一读的 "[Floating-Point Tricks - IEEE Computer Graphics and Applications](https://www.yumpu.com/en/document/view/6104114/floating-point-tricks-ieee-computer-graphics-and-applications)"，告诉你如何通过使用更快的位运算在浮点数上做诸如平方根和幂运算。)
+请注意，浮点数类型（`float`）在内存中与常规的 `int` 类型完全不同：如果你有兴趣，有两篇文章非常值得一读："[What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)"，以及来自 Jim Blinn 的更难找到但非常值得一读的 "[Floating-Point Tricks - IEEE Computer Graphics and Applications](https://www.yumpu.com/en/document/view/6104114/floating-point-tricks-ieee-computer-graphics-and-applications)"，告诉你如何通过使用更快的位运算在浮点数上做诸如平方根和幂运算。
 
 ---
 
@@ -88,7 +89,7 @@ int *pi;
 
 ![](https://upload-images.jianshu.io/upload_images/2648731-94ee1fdaab0c33eb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-这是指针的样子：它指向内存中特定类型的另一个位置。（谁说指针很难呢？）在本例中，`pi` 包含十六进制值 `0x08039170`。`*` 运算符取消引用指针的值，并将值指向一块内存地址。所以，在本例中，内存位置 `0x08039170` 保存的值包含了我们实际上需要的 `int` 值。
+这是指针的样子：它指向内存中特定类型的另一个位置。谁说指针很难呢？在本例中，`pi` 包含十六进制值 `0x08039170`。`*` 运算符取消引用指针的值，并将值指向一块内存地址。所以，在本例中，内存位置 `0x08039170` 保存的值包含了我们实际上需要的 `int` 值。
 
 ---
 
@@ -157,7 +158,7 @@ struct objc_class {
 } OBJC2_UNAVAILABLE;
 ```
 
-这里面包含了 Objecitve-C 运行时对对象进行任何操作所需要的所有信息：找出它遵守什么协议，它有哪些方法，对象的 `ivars`（实例变量）在内存中的布局，它的超类是什么，等等。
+这里面包含了 Objecitve-C 运行时对对象进行任何操作所需要的所有信息：找出它遵守哪些协议，它有哪些方法，对象的 `ivars`（实例变量）在内存中的布局，它的父类是什么，等等。
 
 一个有趣的事情是，`objc_class` 结构的第一个字段与 `NSObject` 结构中的字段类型相同。这意味着 `objc_class` 是一个对象，因为它的内存模型是一样的；因此，所有在实例对象上工作的 Objective-C 操作--比如消息发送---也可以在类对象上工作。这增加了统一性，这意味着（少了很多）区分类对象和实例对象的特例代码。但是，这个类对象的 `isa` 字段指向什么呢？
 
@@ -191,7 +192,7 @@ struct objc_class {
 }
 ```
 
-为了证明它，让我们深入到 gdb 中，偷看正在运行的应用程序中的 `NSApp` 全局变量。首先，你会看到 `NSApp` 确实只是一个指向 `objc_object` 结构的指针。(请记住，在 Objective-C 中，所有的对象引用都是指针。)对 `NSApp` 进行取值，显示它确实有一个 `isa` 字段，而且 `isa` 指向一个类对象的内存地址是 `0x15f8e0`。取消引用它（直接获取该内存地址的值？），你就可以看到关于这个类的细节，比如它的一个实例的大小，以及这个类的名字是什么。在这里，我们假定 `*NSApp->isa->isa` 是元类 `RWApplication` ，而 `*NSApp->isa->superclass` 是 `NSApplication` 类，它是 `RWApplication` 的子类。
+为了证明它，让我们深入到 gdb 中，偷看正在运行的应用程序中的 `NSApp` 全局变量。首先，你会看到 `NSApp` 确实只是一个指向 `objc_object` 结构的指针。请记住，在 Objective-C 中，所有的对象引用都是指针。对 `NSApp` 进行取值，显示它确实有一个 `isa` 字段，而且 `isa` 指向一个类对象的内存地址是 `0x15f8e0`。取消引用它（直接获取该内存地址的值？），你就可以看到关于这个类的细节，比如它的一个实例的大小，以及这个类的名字是什么。在这里，我们假定 `*NSApp->isa->isa` 是元类 `RWApplication` ，而 `*NSApp->isa->superclass` 是 `NSApplication` 类，它是 `RWApplication` 的子类。
 
 ---
 
@@ -248,7 +249,7 @@ struct MySubsubclass {
 @end
 ```
 
-                                               ⬇️
+⬇️
 
 ```objc
 void -[NSMutableString appendString:](id self, SEL _cmd, NSString *aString)
@@ -283,13 +284,13 @@ void -[NSMutableString appendString:](id self, SEL _cmd, NSString *aString)
 [string appendString:@” (that’s what she said)”];
 ```
 
-                                               ⬇️
+⬇️
 
 ```objc
-objc_msgSend(string, @selector(appendString:), @” (that’s what she said)”);
+objc_msgSend(string, @selector(appendString:), @"(that’s what she said)");
 ```
 
-现在，当你使用 [...] 语法向一个对象发送消息时会发生什么？编译器实际上将其转换为对一个名为 `objc_msgSend()` 的函数的调用，该函数是 Objective-C 运行时的一部分[1]。 `objc_msgSend()` 至少需要两个参数：要发送消息的对象（Objective-C 术语中的**接收器**（receiver）），以及一个叫做**选择器**（selector）的东西，它是 "方法名 "的术语。
+现在，当你使用 [...] 语法向一个对象发送消息时会发生什么？编译器实际上将其转换为对一个名为 `objc_msgSend()` 的函数的调用，该函数是 Objective-C 运行时的一部分[1]。 `objc_msgSend()` 至少需要两个参数：要发送消息的对象（Objective-C 术语中的**接收器**（receiver）），以及一个叫做**选择器**（selector）的东西，它是"方法名"的术语。
 
 从概念上讲，你可以把选择器看作是一个简单的 C 语言字符串。事实上，选择器就是一个 C 字符串：它和 C 字符串 `NUL-terminated char*` 指针具有相同的内存模型，就像我们之前提及的 `IntContainer` 结构和一个简单的 `int` 具有相同的内存模型一样。选择器和 C 字符串之间唯一的区别是，**Objective-C 运行时确保每个选择器的唯一实例--即每个方法名的唯一实例--在整个内存地址空间中只有一个**。如果你只是简单地使用 `char*s` 来表示方法名，你可能会有两个 `char*s`，它们的值都是 "`appendString:`"，但驻留在不同的内存地址上（例如 `0xdeadbeef` 和 `0xcafebabe`）。这就意味着，测试一个方法名是否等于另一个方法名，需要用 `strcmp()` 进行一个字符一个字符的比较，当你想简单地执行一个函数调用时，速度慢得令人捧腹。通过确保每个选择器只有一个唯一的内存地址，选择器的相等性可以简单地通过指针比较来完成，这样就快多了。因此，选择器的类型（SEL）与 `char*` 不同，需要使用 `sel_registerName()` 函数将 C 字符串 "转换 "为选择器。
 
@@ -308,7 +309,7 @@ id objc_msgSend(id receiver, SEL name, arguments…)
 	return function(arguments); }
 }
 ```
-                                               ⬆️
+⬆️
 
 ```objc
 objc_msgSend(string, @selector(appendString:), @” (that’s what she said)”);
@@ -322,13 +323,13 @@ Objective-C 的内存模型和消息发送语义有一些非常有趣的结果�
 
 其次，由于可以使用 API 来修改类对象，而且由于消息发送是通过一个 C 函数来隧道（链接）的，所以该语言是高度**动态**（dynamic）的。你可以做一些事情，比如**在运行时增加类，甚至用自己的方法交换预先定义的方法实现**。Objective-C 的消息传递还允许对象有 "第二次机会" 来响应消息：如果你给一个对象发送了一条它不理解的消息，运行时就会调用一个名为 `forwardInvocation` 的方法。(在Objective-C 2.0 中还有`+resolveInstanceMethod:` 方法)，该方法被传递给你想要发送的消息信息，然后对象就可以对该消息为所欲为，比如转发到另一个对象上。
 
-这些功能使 Objective-C 与 Perl、Python、Ruby、PHP 和 JavaScript 等比较著名的动态语言和脚本语言处于同一水平：主要区别在于 Objective-C 是编译成本地代码的。(请不要在这里说 JIT 引擎的迂腐。)不过，它和其他脚本语言一样，几乎是动态的。相比之下，C++ 基本没有反省（只有 RTTI），也没有动态性，而 Java 除了没有等价于 `-forwardInvocation:` 的反省 API 之外，和 Objective-C 类似（反省&动态）。COM & CORBA 差不多就是 C++，上面铲了类似 Objective-C 的特性，才有了一些动态性&反射性，只是它的屁股很丑，很烂。
+这些功能使 Objective-C 与 Perl、Python、Ruby、PHP 和 JavaScript 等比较著名的动态语言和脚本语言处于同一水平：主要区别在于 Objective-C 是编译成本地代码的。请不要在这里说 JIT 引擎的迂腐。不过，它和其他脚本语言一样，几乎是动态的。相比之下，C++ 基本没有反省（只有 RTTI），也没有动态性，而 Java 除了没有等价于 `-forwardInvocation:` 的反省 API 之外，和 Objective-C 类似（反省&动态）。COM & CORBA 差不多就是 C++，上面铲了类似 Objective-C 的特性，才有了一些动态性&反射性，只是它的屁股很丑，很烂。
 
 ![](https://upload-images.jianshu.io/upload_images/2648731-e933c8820e063028.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-你可以通过查看 Apple 的 "[Objective-C 2.0 Runtime Reference](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html)" 文档来获得更多关于 Objective-C 运行时的信息。正如你在幻灯片左侧所看到的那样，有大量的 C 函数可以让你调用来窥探和捅破运行时。
+你可以通过查看 Apple 的 [Objective-C 2.0 Runtime Reference](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html) 文档来获得更多关于 Objective-C 运行时的信息。正如你在幻灯片左侧所看到的那样，有大量的 C 函数可以让你调用来窥探和捅破运行时。
 
-[【翻译】Objective-C Runtime Programming Guide](https://176zane.github.io/2017/11/03/%E3%80%90%E7%BF%BB%E8%AF%91%E3%80%91Objective-C%20Runtime%20Programming%20Guide/)
+
 
 ## RMModelObject
 
@@ -418,7 +419,7 @@ Objective-C 的内存模型和消息发送语义有一些非常有趣的结果�
 @end
 ```
 
-这是`NSArray` 中一个名为 `map`的新方法。它很简单：它接收一个选择器，对数组中的每一项调用该选择器，然后返回一个新的 NSArray，其中包含调用的结果。代码在这里并不重要，重要的是它的一般概念。如果你是一个 Smalltalk 人，在 Smalltalk 术语中，这通常被称为 collect。("map "来自函数式编程世界。)
+这是`NSArray` 中一个名为 `map`的新方法。它很简单：它接收一个选择器，对数组中的每一项调用该选择器，然后返回一个新的 NSArray，其中包含调用的结果。代码在这里并不重要，重要的是它的一般概念。如果你是一个 Smalltalk，在 Smalltalk 术语中，这通常被称为 collect。("map" 来自函数式编程世界。)
 
 ```objc
 NSArray* result = [myArray map:@selector(uppercaseString:)]; 
@@ -456,7 +457,7 @@ Marcel Weiher 和 cocoadev.com 网站上的一群有进取心的 Objective-C 开
 [[myArray logAndIgnoreExceptions] stupidMethod];
 ```
 
-在通常的函数式编程风格的map/fold（neé reduce）/filter集合函数之外，高阶消息传递有很多用途。这里展示了一些例子。
+在通常的函数式编程风格的 map/fold（neé reduce）/filter 集合函数之外，高阶消息传递有很多用途。这里展示了一些例子。
 
 关于 [Higher Order Messaging](http%3A%2F%2Fwww.metaobject.com%2Fpapers%2FHigher_Order_Messaging_OOPSLA_2005.pdf) 的更多信息，只需在 Google 上搜索，你就可以找到 Marcel Weiher 和 Stéphane Ducasse 提交给 OOPSLA [employee salary] 的论文，是 2005 年关于它的现状分析。它比我更好地解释了本文中 HOM 与更传统的高阶函数之间的细微差别的贡献。[employee setSalary:10000]。
 
