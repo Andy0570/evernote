@@ -12,7 +12,7 @@ PGP 可以在 Windows、Mac OS X、Linux 等很多平台上运行，版本包�
 
 以下内容摘自 <https://www.wikiwand.com/zh-cn/菲爾·齊默爾曼>、<https://www.wikiwand.com/zh-cn/PGP>
 
-1991 年，菲利普·齐墨尔曼发表了良好隐私密码法（PGP）的程式，包括程式码与执行档，皆放在公开 FTP 站上，供人自由下载。第一个版本的 PGP 程式与其中使用的加密算法 BassOmatic 都是由齐默尔曼发展出来。
+1991 年，菲利普·齐墨尔曼发表了良好隐私密码法（PGP）的程序，包括程式码与执行档，皆放在公开 FTP 站上，供人自由下载。第一个版本的 PGP 程式与其中使用的加密算法 BassOmatic 都是由齐默尔曼发展出来。
 
 因为 PGP 中使用了 RSA 算法，侵犯了专利权，RSA Security 公司向美国政府提出报告。美国政府长期将密码学视为是军需品，需要管制。
 
@@ -132,7 +132,7 @@ PGP 可以管理所生成的密钥对以及从外部获取的公钥，用于管�
 
 PGP 的加密过程如下图，在这张图中，消息是经过混合密码系统进行加密，然后转换成报文数据（文本数据）。
 
-![PGP 加密](https://upload-images.jianshu.io/upload_images/2648731-6c61cf49fef3a206.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![PGP 加密](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/824EC967FB85B15A2574057ED6F433ED.png)
 
 ### PGP 加密过程
 
@@ -152,7 +152,7 @@ PGP 的加密过程如下图，在这张图中，消息是经过混合密码系�
 
 PGP 解密过程如下图，这张图展示了接收者在收到发送者生成的报文数据之后，解密得到原始消息的过程。
 
-![image](https://upload-images.jianshu.io/upload_images/2648731-c65a6609ede6a01c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/EF19480451406BC5321740ED9BE67A8B.png)
 
 ### 解密私钥
 
@@ -173,7 +173,7 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 下图展示了在加密和解密的过程中，会话密钥和消息进过了怎样的变化。
 
-![加密与解密](https://upload-images.jianshu.io/upload_images/2648731-7eb573822fa4e642?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![加密与解密](https://img-blog.csdn.net/20181014150618280?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoZW5ncWl1bWluZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 
 ## 生成和验证数据签名
@@ -182,7 +182,7 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 下图展示了 PGP 中生成数字签名的过程。在这张图中，消息与相应的签名进行拼合，并最终转换成报文数据（文本数据）。顺便提一下，对于是否要将报文数据转换成文本数据，在 PGP 中是可以选择的。
 
-![生成数字签名](https://upload-images.jianshu.io/upload_images/2648731-332dd6ff3bb351cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![生成数字签名](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image-1.png)
 
 
 ### 生成数字签名的步骤
@@ -204,7 +204,7 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 下图展示了用 PGP 验证数字签名的过程，即接受者在接收到报文数据后，得到原始数据并验证数字签名的过程。
 
-![验证数字签名](https://upload-images.jianshu.io/upload_images/2648731-3383a7f36d126362.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![验证数字签名](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image%20-1-%20-2-.png)
 
 ### 验证数字签名的步骤
 
@@ -221,7 +221,7 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 下图展示了在生成和验证数字签名的过程中，散列值和消息经过了怎样的变化。
 
-![image](https://upload-images.jianshu.io/upload_images/2648731-0534a2461e768052.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image-2.png)
 
 ## 生成数据签名并加密以及解密并验证数字签名
 
@@ -231,7 +231,7 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 对于是否要将报文数据转换成文本数据，在 PGP 中是可以选择的。
 
-![生成数据签名并加密](https://upload-images.jianshu.io/upload_images/2648731-75140b92bd070602.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![生成数据签名并加密](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image-3.png)
 
 生成数据签名并加密步骤：
 1. 生成数字签名;
@@ -244,7 +244,7 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 用 PGP 解密并验证数字签名的过程如下图，图中展示了对接收到报文数据进行解密和解压缩，并对所得到的消息验证数字签名这两个过程。最终得到的结果包括消息本身以及对数字签名的验证结果。
 
-![解密并验证数字签名](https://upload-images.jianshu.io/upload_images/2648731-3b50f8d384f55ca1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![解密并验证数字签名](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image-4.png)
 
 > ⚠️ 图例勘误：左上角的「发送者」应该改为「接收者」，是接收者通过自己的口令计算出加密密钥的密钥（KEK），进而获取到接收者自己的私钥。
 
@@ -254,7 +254,9 @@ PGP 的私钥是保存在用户的钥匙串中的。为了防止钥匙串被盗�
 
 下图展示了在“生成数据签名并加密”和“解密并验证数字签名”的步骤中，散列值、会话密钥和消息分别经过了怎样的变化。
 
-![image](https://upload-images.jianshu.io/upload_images/2648731-944bb4b180703b55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image-5.png)
+
+
 
 
 ## 信任网
@@ -362,7 +364,7 @@ Alice 的公钥串中所存放的这些公钥之间形成了一张信任网。
 
 我们可以将上述关系总结成下面这张图。这就是信任网，也叫 “信任数据库” 或者 “信任网络”。
 
-![image](https://upload-images.jianshu.io/upload_images/2648731-e334699f028e4324.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/image-6.png)
 
 在这里需要注意的是，“对哪个密钥的所有者进行哪种级别的信任” 是因人而异的。
 

@@ -2,7 +2,7 @@ OAuth 背后的思想是，提供一种能与第三方匿名共享资源的身�
 
 OAuth 为客户端提供了一种代表资源拥有者访问受保护资源的方法。在客户端访问受保护资源之前，它必须先从资源拥有者获取授权（访问许可），然后用访问许可交换访问令牌（代表许可的作用域、持续时间和其它属性）。客户端通过向资源服务器出示访问令牌来访问受保护资源。
 
- 访问令牌提供了一个抽象层，将不同的授权结构（如用户名密码、断言）替换成资源服务器可以理解的单一令牌。这种抽象使得分发短期有效的访问令牌成为可能，也使得资源服务器不必理解多种多样的授权机制。
+访问令牌提供了一个抽象层，将不同的授权结构（如用户名密码、断言）替换成资源服务器可以理解的单一令牌。这种抽象使得分发短期有效的访问令牌成为可能，也使得资源服务器不必理解多种多样的授权机制。
 
 ## 角色
 
@@ -46,14 +46,14 @@ OAuth 定义了四个角色：
 
 客户端必须得到用户的授权（authorization grant），才能获得令牌（access token）。OAuth 2.0 定义了四种授权方式。
 
-* 授权码模式（authorization code）；
-* 简化模式（implicit）；
-* 密码模式（resource owner password credentials）；
-* 客户端模式（client credentials）；
+* 授权码模式（Authorization Code Grant）；
+* 简化模式（Implicit Grant）；
+* 密码模式（Resource Owner Password Credentials Grant）；
+* 客户端模式（Client Credentials Grant）；
 
 ## 授权码模式
 
-授权码模式（authorization code）是功能最完整、流程最严密的授权模式。它的特点就是通过客户端的后台服务器，与 "服务提供商" 的认证服务器进行互动。
+授权码模式（Authorization Code Grant）是功能最完整、流程最严密的授权模式。它的特点就是通过客户端的后台服务器，与"服务提供商"的认证服务器进行互动。
 
 ```
      +----------+
@@ -95,8 +95,8 @@ OAuth 定义了四个角色：
 
 | 参数 | 内容 |
 | ---  | --- |
-| Client ID（20位） | 9fdd83d1eb9983cbacbb |
-| Client Secret（40位） | e0e62d3b1813affdss7c26827f7a9f5fc665840e |
+| Client ID | 9fdd83d1eb9983cbacbb |
+| Client Secret | e0e62d3b1813affdss7c26827f7a9f5fc665840e |
 
 * Client ID：应用的唯一标识。
 * Client Secret：应用对应的密钥，访问用户资源时用来验证应用的合法性。
@@ -112,11 +112,11 @@ OAuth 定义了四个角色：
 
 | 参数 | 必要性 | 说明 |
 | --- | --- | --- |
-| response_type | 必须 | 授权类型，此处的值固定为 `code` |
-| client_id | 必须 | 客户端 id |
-| redirect_uri | 可选 | 重定向 URL |
-| scope | 可选 | 表示申请的权限范围 |
-| state | 推荐 | 表示客户端的当前状态，可以指定任意值，认证服务器会原封不动地返回这个值。 |
+| response_type | 必需参数 | 授权类型，此处的值固定为 `code` |
+| client_id | 必需参数 | 客户端 id |
+| redirect_uri | 可选参数 | 重定向 URL |
+| scope | 可选参数 | 表示申请的权限范围 |
+| state | 推荐参数 | 表示客户端的当前状态，可以指定任意值，认证服务器会原封不动地返回这个值。 |
 
 客户端请求示例：
 
@@ -131,8 +131,8 @@ Host: server.example.com
 
 | 参数 | 必要性 | 说明 |
 | --- | --- | --- |
-| code | 必须 | 授权码，用于绑定客户端重定向 URL 和客户端标识符的访问权限 |
-| state | 必须 | 该参数用于防跨站请求伪造（CSRF），如果该参数由客户端上传了，则服务端需要原样返回 |
+| code | 必需参数 | 授权码，用于绑定客户端重定向 URL 和客户端标识符的访问权限 |
+| state | 必需参数 | 该参数用于防跨站请求伪造（CSRF），如果该参数由客户端上传了，则服务端需要原样返回 |
 
 
 授权服务器返回示例：
@@ -142,6 +142,30 @@ HTTP/1.1 302 Found
 Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
         &state=xyz
 ```
+
+错误响应参数：
+
+| 参数 | 必要性 | 说明 |
+| --- | --- | --- |
+| error | 必需参数 | 错误码 |
+| error_description | 可选参数 | 提供额外信息的一段人类可读的文字，用来帮助理解和解决发生的错误 |
+| error_uri | 可选参数 | 指明了一个人类可读的网页 URI，带有关于错误的信息，用来为终端用户提供与错误有关的额外信息。 |
+| state | 必需参数 | 如果 “state” 参数在客户端授权请求中存在，则这个参数是必需的。需要精确地设置成从客户端接收到的值。 |
+
+授权服务器在错误响应中包含下列错误码之一：
+
+| 错误代码 | 说明 |
+| --- | --- |
+invalid_request  | 请求缺少某个必需参数，包含一个不支持的参数或参数值，或者格式不正确。
+invalid_client   | 提供的客户端标识符是无效的。
+unauthorized_client  | 客户端没有权限使用该请求的响应类型。
+redirect_uri_mismatch  | 提供的重定向 URI 与预先注册的值不匹配。
+access_denied   | 终端用户或授权服务器拒绝了请求。
+unsupported_response_type  | 请求的响应类型不为授权服务器所支持。
+invalid_scope    | 请求的作用域是无效的、未知的，或格式不正确的。
+
+
+
 
 ### 访问令牌
 

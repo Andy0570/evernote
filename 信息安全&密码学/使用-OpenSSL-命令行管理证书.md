@@ -1899,6 +1899,4 @@ subjectKeyIdentifier    = hash
 * [OpenSSL 中文手册 之一 OpenSSL 简介－证书](https://blog.csdn.net/xiyuan1999/article/details/6416948)
 * [Let's Encrypt，免费好用的 HTTPS 证书](https://imququ.com/post/letsencrypt-certificate.html)
 * [主流浏览器直接信任 Let’s Encrypt 根证书，宣告他成为顶级 CA](https://www.jianshu.com/p/3a2c274b61d8)
-* [OpenSSL 精粹：SSL 证书、私钥和 CSR | Linux 中国](https://mp.weixin.qq.com/s/N5s_d3DNwsyAkuFRLIBCRA)
-* [iOS 证书幕后原理](http://chuquan.me/2020/03/22/ios-certificate-principle/)
 
