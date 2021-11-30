@@ -13,8 +13,9 @@
 
 诺，下面这是就是了👇
 
-![](https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/IMG_3248.JPG)
-
+<p align="center">
+<img src="https://blog-andy0570-1256077835.cos.ap-shanghai.myqcloud.com/site_Images/IMG_3248.JPG" alt="husky" width="400">
+</p>
 
 
 日常会三天两头带着我的 🐶 儿子跑步，参加过一次马拉松。
