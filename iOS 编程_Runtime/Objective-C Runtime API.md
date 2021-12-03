@@ -1,4 +1,6 @@
-# Runtime 运行时 API
+[Objective-C Runtime Reference](https://developer.apple.com/documentation/objectivec/objective-c_runtime?language=objc)
+
+# Objective-C Runtime API
 
 ```objectivec
 //***************************************************
@@ -131,3 +133,4 @@ SEL sel_getUid ( const char *str );
 // 比较两个选择器
 BOOL sel_isEqual ( SEL lhs, SEL rhs );
 ```
+

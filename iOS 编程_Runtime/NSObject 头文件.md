@@ -20,7 +20,7 @@
  
 // 获取对象的父类
 @property (readonly) Class superclass;
-// 获取当前对象的类
+// ❇️ 获取当前对象的类
 - (Class)class OBJC_SWIFT_UNAVAILABLE("use 'type(of: anObject)' instead");
 // 获取当前对象
 - (instancetype)self;
@@ -35,14 +35,14 @@
 //  判断对象是否继承 NSObject
 - (BOOL)isProxy;
  
-// 判断对象是否是给定类或给定类子类的实例
+// ❇️ 判断对象是否是给定类或给定类子类的实例
 - (BOOL)isKindOfClass:(Class)aClass;
-// 判断对象是否是给定类的实例（不包括子类）
+// ❇️ 判断对象是否是给定类的实例（不包括子类）
 - (BOOL)isMemberOfClass:(Class)aClass;
-// 判断对象是否遵从给定的协议
+// ❇️ 检查对象是否实现了指定协议类的方法
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol;
  
-// 判断对象是否能够调用给定的方法
+// ❇️ 检查对象能否响应指定的消息
 - (BOOL)respondsToSelector:(SEL)aSelector;
  
 // 对象引用计数加1, 在 MRC 下使用
@@ -109,7 +109,7 @@ NS_DESIGNATED_INITIALIZER
 + (BOOL)instancesRespondToSelector:(SEL)aSelector;
 // 判断类是否遵从给定的协议
 + (BOOL)conformsToProtocol:(Protocol *)protocol;
-// 获取指向方法实现IMP的指针
+// ❇️ 获取指定方法实现的 IMP 指针
 - (IMP)methodForSelector:(SEL)aSelector;
 // 获取指向实例方法实现IMP的指针
 + (IMP)instanceMethodForSelector:(SEL)aSelector;

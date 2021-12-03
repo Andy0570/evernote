@@ -78,11 +78,15 @@ int main(int argc, const char * argv[]) {
 }
 ```
 
+> 从 Xcode5 开始，苹果就不建议我们手动调用 Runtime 的 API，也同样希望我们不要知道具体底层实现。所以 IDE 上面默认带了一个参数，禁止了 Runtime 的代码提示，源码和文档方面也删除了一些解释。
+
 注：在 Xcode 中编辑以上代码时，如果编辑器报错：
 
 `objc_msgSend()` 报错 Too many arguments to function call , expected 0, have2.
 
 需要设置：Build Setting --> Apple LLVM 6.0 - Preprocessing --> Enable Strict Checking of objc_msgSend Calls  改为 NO 即可。
+
+![](https://i.loli.net/2021/11/30/cQMphm9Kn83Udgl.jpg)
 
 有一批函数是 Objective-C 程序中发送消息的中心，而 `objc_msgSend()` 函数正是其中之一。这些函数在 `objc/message.h` 中被声明。如果想要了解更多关于这类函数以及其他运行时函数的信息，可以在开发者文档中查阅 [Objective-C Runtime Reference](https://developer.apple.com/documentation/objectivec/objective-c_runtime)。
 

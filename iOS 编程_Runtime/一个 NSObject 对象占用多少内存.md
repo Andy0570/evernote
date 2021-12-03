@@ -26,7 +26,7 @@ oc 的代码底层其实是 c 和 c++ 的代码，通过如下命令可以将 oc
 clang -rewrite-objc main.m -o main.cpp
 ```
 
-Mac，Windows，iOS 等不同平台，以及不同架构，生成的 c++ 代码是不一样的，可以指定平台以及架构，命令如下：
+Mac OS，Windows，iOS 等不同平台，以及不同架构，生成的 c++ 代码是不一样的，可以指定平台以及架构，命令如下：
 
 ```bash
 xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc main.m -o -main-arm64.cpp
@@ -56,8 +56,7 @@ struct NSObject_IMPL {
 }
 
 // objc-class-old.mm
-id 
-_class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
+id _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
 {
     void *bytes;
     size_t size;
@@ -70,7 +69,7 @@ _class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone)
     size = cls->alignedInstanceSize() + extraBytes;
 
     // CF requires all objects be at least 16 bytes.
-    // CF 要求所有对象至少为16字节。
+    // CoreFoundation 要求所有对象至少为16字节。
     if (size < 16) size = 16;
 
     if (zone) {
@@ -235,5 +234,4 @@ malloc_zone_calloc(malloc_zone_t *zone, size_t num_items, size_t size)
 * `malloc` 是系统分配的内存大小
 * 二者的区别相当于一个盒子有多大空间和实际用了多少空间
 * 不过获取成员变量实际大小的时候已经是内存对齐之后的大小了。
-
 

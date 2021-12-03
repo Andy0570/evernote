@@ -372,6 +372,7 @@ __strong __typeof(weakSelf)strongSelf = weakSelf;
 
 ### 参考
 
+* [Xcode Snippets](https://nshipster.cn/xcode-snippets/)
 * [iOS开发－学会使用代码块，提高你的开发效率](https://shevakuilin.github.io/2016/05/10/iOS开发－学会使用代码块，提高你的开发效率/)
 
 

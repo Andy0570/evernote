@@ -1,5 +1,3 @@
-![](http://upload-images.jianshu.io/upload_images/2648731-3378035b6a6c0b65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800)
-
 * GitHub: [CocoaPods](https://github.com/CocoaPods/CocoaPods)
 * star: 12.4k
 
@@ -275,6 +273,8 @@ bad response Not Found 404 (http://ruby.taobao.org/specs.4.8.gz)
 
   解决方案：把安装流程中 `gem sources -a http://ruby.taobao.org/`  改为 `gem sources -a https://ruby.taobao.org/`
 
+
+
 ### 错误 2
 
 ```bash
@@ -283,6 +283,8 @@ Operation not permitted - /usr/bin/pod
 ```
 
 解决方案：苹果系统升级OS X EL Capitan后会出现的插件错误，将安装流程安装CocoaPods 的 (1) `sudo gem install cocoapods` ——>改为 `sudo gem install -n /usr/local/bin cocoapods` 即可。
+
+
 
 ### 错误 3
 
@@ -293,37 +295,34 @@ The dependency AFNetworking is not used in any concrete target
 
 解决方案：
 
-1. 安装cocoapods的预览版本
+Step 1：安装cocoapods的预览版本
 
-   ```bash
-   sudo gem install cocoapods --pre
-   ```
+```bash
+sudo gem install cocoapods --pre
+```
+
+Step 2：修改Podfile格式
+
+ ```bash
+ platform :ios, '8.0'
+
+ target 'MyApp' do
+
+ pod 'AFNetworking', '~> 2.6'
+ pod 'ORStackView', '~> 3.0'
+
+ end
+ ```
+里面的 MyApp 记得替换为自己项目里的 target。
+
+Step 3：更新pod
+
+```bash
+pod update
+pod install
+```
 
 
-2. 修改Podfile格式
-
-   ```bash
-   platform :ios, '8.0'
-
-   target 'MyApp' do
-
-   pod 'AFNetworking', '~> 2.6'
-   pod 'ORStackView', '~> 3.0'
-
-   end
-   ```
-
-    *里面的 MyApp 记得替换为自己攻城里面的target。
-
-
-
-3. 更新pod
-
-   ```bash
-   pod install / pod update
-   ```
-
-   
 
 ### 错误 4
 
@@ -365,6 +364,8 @@ RPC failed; curl 18 transfer closed with outstanding read data remaining
 ```bash
 git config http.postBuffer 524288000
 ```
+
+
 
 ### 错误 6
 
@@ -426,11 +427,9 @@ sudo gem install cocoapods -n /usr/local/bin
 * [iOS 最新版 CocoaPods 的安装流程](http://www.cnblogs.com/zxs-19920314/p/4985476.html) （阅读难度：★）
 * [CocoaPods 公有库](https://www.jianshu.com/p/8111873cfaa9)
 * [Cocoapods 入门 @不会开机的男孩](http://studentdeng.github.io/blog/2013/09/13/cocoapods-tutorial/)
-* [看一遍就会的CocoaPods的安装和使用教程](http://www.jianshu.com/p/1711e131987d)
-  概述：第三方库依赖管理工具，管理第三方库。
+* [看一遍就会的CocoaPods的安装和使用教程](http://www.jianshu.com/p/1711e131987d)，第三方库依赖管理工具，管理第三方库。
 * [CocoaPods安装和使用教程](http://code4app.com/article/cocoapods-install-usage)
 * [iOS 静态库，动态库与 Framework](https://skyline75489.github.io/post/2015-8-14_ios_static_dynamic_framework_learning.html)
 * http://www.jianshu.com/p/8af475c4f717
 * http://ios.jobbole.com/90957/
-
 
