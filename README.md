@@ -27,6 +27,12 @@
 ![Alt](https://repobeats.axiom.co/api/embed/9096aa90cd56992adaa74a70dfdfd2eabfe513be.svg "Repobeats analytics image")
 
 
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/Andy0570/evernote.svg)](https://starchart.cc/Andy0570/evernote)
+
+
 ## 使用许可
 
 本项目基于 [MIT](https://opensource.org/licenses/MIT) 许可协议，详情请参见 [LICENSE](https://github.com/Andy0570/evernote/blob/main/LICENSE)。
