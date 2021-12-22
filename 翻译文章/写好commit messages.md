@@ -1,5 +1,4 @@
-原文：
-* [Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
+> 原文：[Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
 
 Good commit messages serve at least three important purposes:
 
@@ -17,7 +16,7 @@ Good commit messages serve at least three important purposes:
 
 Structure your commit message like this:
 
-From: [[http://git-scm.com/book/ch5-2.html]]
+From: [http://git-scm.com/book/ch5-2.html]
 
 > ```
 > Short (50 chars or less) summary of changes
@@ -41,7 +40,7 @@ From: [[http://git-scm.com/book/ch5-2.html]]
 
 你提交的消息结构如下所示：
 
-来自：[[http://git-scm.com/book/ch5-2.html]]
+来自：[http://git-scm.com/book/ch5-2.html]
 
 > ```
 > 短（50个字符或更少）更改的摘要
