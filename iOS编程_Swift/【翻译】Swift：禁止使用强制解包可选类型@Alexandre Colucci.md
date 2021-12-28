@@ -1,4 +1,4 @@
-> 原文：[Swift: Banning force unwrapping optionals](https://blog.timac.org/2017/0628-swift-banning-force-unwrapping-optionals/)
+> 原文：[Swift: Banning force unwrapping optionals @Alexandre Colucci](https://blog.timac.org/2017/0628-swift-banning-force-unwrapping-optionals/)
 
 
 
@@ -108,7 +108,7 @@ Xcode的 Fix-it 功能建议插入强制解包操作符...即使它没有意义�
 
 ---
 
-可选绑定（if let）
+可选绑定（`if let`）
 
 下面的代码是正确的，但使用了 2 个强制解包：
 
