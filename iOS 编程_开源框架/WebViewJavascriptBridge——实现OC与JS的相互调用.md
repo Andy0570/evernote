@@ -1,4 +1,5 @@
 * GitHub: [WebViewJavascriptBridge](https://github.com/marcuswestin/WebViewJavascriptBridge)
+* Swift: [WKWebViewJavascriptBridge](https://github.com/Lision/WKWebViewJavascriptBridge)
 * Star: 11000+
 
 > 说明：双方交互之前还有一些初始化代码，此处省略。。。
