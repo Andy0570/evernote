@@ -140,9 +140,9 @@ NSDictionary *dic1 = [[NSDictionary alloc] initWithObjectsAndKeys:
                       
 // xcode4.4以后对字典的创建和访问,语法上做了优化。
 NSDictionary *dic11 = @{
-					   	@"zhang":array1,
-                       	@"li":array2
-                       };
+        @"zhang": array1,
+        @"li": array2
+};
                        
 // 2.类方法创建字典 
 NSDictionary *dic2 = [NSDictionary dictionaryWithObjectsAndKeys: 
