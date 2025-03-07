@@ -15,7 +15,7 @@
 
 ### 判断 iOS 系统版本
 
-```objectivec
+```objective-c
 // 如果是 iOS 11 系统，使用 barnHD.png 图片。否则，使用 barn.png 图片。
 #ifdef __iPhone_11_0 
   #define KImageFile @"barnHD.png"
@@ -26,7 +26,7 @@
 
 ### 判断 iOS 系统版本
 
-```objectivec
+```objective-c
 // 判断当前系统版本是否大于 iOS 3.0
 #ifndef __iPhone_3_0
 #warning "This project uses features only available in iOS SDK 3.0 and later."
@@ -35,7 +35,7 @@
 
 ### 判断编程语言
 
-```objectivec
+```objective-c
 // 保证在#ifdef中的宏定义只会在OC的代码中被引用，
 // 否则，一旦引入C/C++的代码或者框架，就会出错！
 #ifdef __Objective-C__
@@ -70,7 +70,7 @@
 
 参数含义：
 
-1. `__VA_ARGS__` 是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起到把前面多余的","去掉的作用,否则会编译出错, 你可以试试。
+1. `__VA_ARGS__` 是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的 C99 规范中新增的，目前似乎只有 gcc 支持（VC6.0 的编译器不支持）。宏前面加上 `##` 的作用在于，当可变参数的个数为 0 时，这里的 `##` 起到把前面多余的 "," 去掉的作用，否则会编译出错，你可以试试。
 2. `__FILE__` 宏在预编译时会替换成当前的源文件名。
 3. `__LINE__` 宏在预编译时会替换成当前的行号。
 4. `__FUNCTION__` 宏在预编译时会替换成当前的函数名称。
@@ -80,7 +80,7 @@
 
 `#if` 预处理程序语句为控制条件编译提供了更通用的方法。如果满足`#if`后面的条件，就编译`#if`和`#endif`之间的程序段，否则不编译。
 
-```objectivec
+```objective-c
 #if defined (DEBUG)
   //...
 #endif
@@ -88,14 +88,14 @@
 
 效果同下：
 
-```objectivec
+```objective-c
 #ifdef DEBUG
   //...
 #endif
 ```
 
 ### 判断应用运行环境
-```objectivec
+```objective-c
 #if !TARGET_IPHONE_SIMULATOR
     // 如果当前环境不是模拟器，则执行这里的代码或者方法。
     // 一般用于需要打开手机硬件的场景，如相机、GPS、陀螺仪等。
@@ -107,13 +107,13 @@
 
 使已经定义的名称成为未定义的，来消除特点名称的定义
 
-```objectivec
+```objective-c
 #undef name // 取消定义
 ```
 
 ## NS_DEPRECATED_IOS 与 NS_AVAILABLE_IOS
 
-```objectivec
+```objective-c
 // NS_DEPRECATED_IOS(2_0, 10_0）表示该函数只能在 iOS 2.0 和 iOS 10.0 之间使用，是已被废弃的函数，
 // 但并不是说在 iOS 10.0 之后不能使用该函数了，是可以使用，但也需要考虑找其他替代方法了。
 - (BOOL)openURL:(NSURL*)url NS_DEPRECATED_IOS(2_0, 10_0, "Please use openURL:options:completionHandler: instead") NS_EXTENSION_UNAVAILABLE_IOS("");
@@ -125,7 +125,7 @@
 解决某些方法失效导致的版本兼容性问题：
 
 示例代码一：
-```objectivec
+```objective-c
 // @available() 语法
 if (@available(iOS 10.0, *)) {
     [[UIApplication sharedApplication] openURL:url options:@{UIApplicationOpenURLOptionUniversalLinksOnly: @YES} completionHandler:nil];
@@ -135,7 +135,7 @@ if (@available(iOS 10.0, *)) {
 ```
 
 示例代码二：
-```objectivec
+```objective-c
 // 根据 iOS 系统版本适配 UI 显示
 if (@available(iOS 11.0, *)) {
     make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);

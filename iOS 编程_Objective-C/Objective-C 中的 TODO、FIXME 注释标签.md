@@ -2,8 +2,6 @@
 
 在 Xcode 中通过 Objective-C 语言编写代码时，你可能经常会使用 `#pragma mark` 预处理指令来实现代码注释，或者对类实现文件中的方法按照功能进行分组。其实，**在 Xcode 中，也可以实现 `TODO`、`FIXME` 等高亮语法**。
 
-
-
 ## `#pragma mark` 语法
 
 之前我在 [Xcode 使用技巧/代码整洁小技巧 #pragma mark](https://www.jianshu.com/p/68d8ce9eed14) 部分也有探讨过 `#pragma mark` 语法的常见用法。
@@ -58,10 +56,9 @@
 - (NSString *)description { /* ... */ }
 ```
 
-
-
-💡 敲黑板！到这里，如果有人就是搞不明白，写这些花里胡哨的东西到底有啥用啊？请在类文件中输入键盘快捷键 **Control + 6**，然后等待奇迹的发生。
-
+> [!NOTE]
+>
+> 敲黑板！到这里，如果有人就是搞不明白，写这些花里胡哨的东西到底有啥用啊？请在类文件中输入键盘快捷键 **Control + 6**，然后等待奇迹的发生。
 
 ## `#warning` 和 `#error` 语法
 
@@ -72,25 +69,25 @@
 #error 自定义错误警告
 ```
 
-
-
 ## TODO、FIXME 语法
 
 用过 VS Code 的人很有可能安装过这两个插件：[Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)、[TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight)。
 
-在 Xcode 中进行编码时，至少可以使用 5 个不同的注释标签在代码中方便地进行跳转：
+在 Xcode 中进行编码时，至少可以使用 6 个不同的注释标签在代码中方便地进行跳转：
 
 ```objectivec
-// TODO:
-// FIXME:
-// MARK:
-// ???:
-// !!!:
+// MARK: <#普通标记#>
+// TODO: <#待办事项#>
+// FIXME: <#待修复的 Bug#>
+// ERROR: <#错误#>
+// ???: <#疑问#>
+// !!!: <#重要信息#>
 ```
 
+* **MARK 注释**：标记需要关注的代码，普通注释，与 `#pragma mark` 效果相同。
 * **TODO 注释**：标记某些日后需要修正的代码、待办事项、等待日后更新或者完善的代码。
 * **FIXME 注释**：标记某些可能存在 Bug 的代码，以便日后修复。
-* **MARK 注释**：标记需要关注的代码，普通注释，与 `#pragma mark` 效果相同。
+* **ERROR  注释**：标记某些可能存在错误的代码，以便日后修复。
 * **??? 注释**：当你不确定某些代码逻辑的原理，或者没看懂别人写的代码时，可以打上三个问号进行标记。
 * **!!! 注释**：标记需要关注的代码，通常用来标记重要的步骤、方法、功能、核心算法。
 

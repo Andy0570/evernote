@@ -1,6 +1,8 @@
-> 💡
-> 生产环境下，推荐使用开源时间类框架：
-> [DateTools](https://github.com/MatthewYork/DateTools) | [DateTools 使用「日期工具库」](https://www.jianshu.com/p/10c5a9e60880)
+> [!TIP]
+>
+> 开源时间类框架：[DateTools](https://github.com/MatthewYork/DateTools) | [DateTools 使用「日期工具库」](https://www.jianshu.com/p/10c5a9e60880)
+>
+> 在线 DateFormatter 工具：[NSDateFormatter.com](https://www.nsdateformatter.com/)
 
 # NSDate
 
@@ -8,11 +10,11 @@
 * **NSDate** 是一个类簇，我们所使用的 **NSDate** 对象，都是 **NSDate** 的私有子类的实体。
 * **NSDate** 存储的是 **GMT** 时间，使用的时候会根据当前应用指定的 **时区** 进行时间上的增减，以供计算或显示。
 
-### 创建时间对象
+## 创建时间对象
 
 * 当前时间
 
-```objectivec
+```objective-c
 // 现在时间
 NSDate *now1 = [NSDate date];
 // 现在时间（同上）
@@ -22,16 +24,16 @@ NSDate *now3 = [NSDate new];
 
 * 未来时间和过去时间
 
-```objectivec
+```objective-c
 // 可以表示的最远的未来时间 : 4001-01-01 00:00:00 +0000
 NSDate *distantFuture = [NSDate distantFuture];
 // 可以表示的最早的过去时间 : 0000-12-30 00:00:00 +0000
 NSDate *distantPast = [NSDate distantPast];
 ```
 
-* 创建相对时间 = 某个时间节点 + 时间戳（**NSTimeInterval**）
+* 创建相对时间 = 某个时间节点 + 时间戳（`NSTimeInterval` 实例）
 
-```objectivec
+```objective-c
 // ----------------------------- 类方法 --------------------------------
 // 相对于当前时间
 NSDate *dateFromNow = [NSDate dateWithTimeIntervalSinceNow:0];
@@ -55,22 +57,21 @@ NSDate *dateFrom19702 = [[NSDate alloc] initWithTimeIntervalSince1970:0];
 
 * 昨天、今天、明天
 
-```objectivec
+```objective-c
 // 24H 的时间戳值
 NSTimeInterval time = 24 * 60 * 60;  
 
-//昨天此刻的时间
+// 昨天此刻的时间
 NSDate *yesterday = [[NSDate alloc] initWithTimeIntervalSinceNow:- time];
-//现在的时间
+// 现在的时间
 NSDate *today = [[NSDate alloc] initWithTimeIntervalSinceNow:0]; 
-//明天此刻的时间
-NSDate 	*tomorrow = [[NSDate alloc] initWithTimeIntervalSinceNow:time];
+// 明天此刻的时间
+NSDate *tomorrow = [[NSDate alloc] initWithTimeIntervalSinceNow:time];
 ```
-
 
 * 日期的比较
 
-```objectivec
+```objective-c
 // -------------------------------------------------------------
 // 1. 通过 compare: 比较
 NSComparisonResult result = [tomorrow compare:yesterday];
@@ -119,7 +120,7 @@ NSLog(@"laterDate: %@",laterDate);	// laterDate: Fri Apr 14 12:30:36 2017
 
 * 创建某个指定日期
 
-```objectivec
+```objective-c
 //mikey.hireDate = [NSDate dateWithNaturalLanguageString:@"Aug 2nd,2010"];
 
 //Specifying date
@@ -154,18 +155,18 @@ NSDate *birthday = [calendar dateFromComponents:components];
 #  NSTimeInterval
 
 * **NSTimeInterval（时间戳）**：用于指定两个时间节点之间的时间间隔（以秒为单位）。
-* **NSTimeInterval** 始终以 **秒** 为单位指定; 它在10,000年的范围内产生了亚毫秒的精度。
+* **NSTimeInterval** 始终以 **秒** 为单位指定; 它在 10,000 年的范围内产生了亚毫秒的精度。
 
 
 ### 声明
 
-```objectivec
+```objective-c
 typedef double NSTimeInterval;
 ```
 
 * 获取时间戳
 
-```objectivec
+```objective-c
 // -------------------------------------------------------------
 // 给定时间 相对于 现在时间 的时间戳
 NSDate *now = [NSDate date];
@@ -192,9 +193,9 @@ NSTimeInterval timeInterval = [now timeIntervalSince1970];
 NSLog(@"timeInterval is %f",timeInterval); // timeInterval is 1492052119.655184
 ```
 
-* **NSDate**对象与时间戳（**NSTimeInterval**） 相互转换
+* **NSDate** 对象与时间戳（**NSTimeInterval**） 相互转换
 
-```objectivec
+```objective-c
 // NSDate对象 ------> 相对于1970年的时间戳
 NSDate *now =[[NSDate alloc] init]; //创建此刻的时间
 NSTimeInterval timeInterval = [now timeIntervalSince1970]; 
@@ -205,7 +206,7 @@ NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval]; //获取时�
 
 * 数字字符串 ——> 时间戳 ——> **NSDate** 对象
 
-```objectivec
+```objective-c
 NSString *timeString = @"1234567890";
 NSDate *convertDate = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]];
 NSLog(@"convertDate %@", convertDate);	// convertDate Sat Feb 14 07:31:30 2009
@@ -213,23 +214,26 @@ NSLog(@"convertDate %@", convertDate);	// convertDate Sat Feb 14 07:31:30 2009
 
 # NSDateFormatter
 
-**NSDateFormatter** 是 **NSFormatter** 的子类。另，**NSFormatter** 的用途是“将数据在字符串与特定类型的对象之间转换”，目前 **NSFormatter** 只有两个子类 **NSNumberFormatter** 和 **NSDateFormatter**。
+`NSDateFormatter` 是 `NSFormatter` 的子类。`NSFormatter` 的用途是“将数据在字符串与特定类型的对象之间转换”，目前 `NSFormatter` 只有两个子类 `NSNumberFormatter` 和 `NSDateFormatter`。
 
-尽管 **NSDateFormatter** 提供了许多已定义好的时间格式，但是开发中开发人员更加喜欢自定义时间格式。
+尽管 `NSDateFormatter` 提供了许多已定义好的时间格式，但是开发中开发人员更加喜欢自定义时间格式。
 
-过多使用 **NSDateFormatter** 将影响程序的性能，且程序中 **NSDateFormatter** 对象的时间格式基本一致，所以使用 **NSDateFormatter** 的时候尽量使用单例模式。
+过多使用 `NSDateFormatter` 将影响程序的性能，且程序中 `NSDateFormatter` 对象的时间格式基本一致，所以使用 `NSDateFormatter` 的时候尽量使用单例模式。
 
 * [性能优化之 NSDateFormatter](http://www.jianshu.com/p/82c1104aea6c)
 
-1. 将时间字符串转换到 `NSDate` 对象，一般都是使用"年月日 时分秒"，数据库中的date类型基本上也是这样的时间类型。 格式一般为：`yyyy-MM-dd HH:mm:ss`。
-   注：yyyy是小写的！大写的YYYY的意思有些不同——“将这一年中第一周的周日当作今年的第一天”，因此有时结果和yyyy相同，有时就会不同。
+1. 将时间字符串转换到 `NSDate` 对象，一般都是使用"年月日时分秒"，数据库中的 date 类型基本上也是这样的时间类型。 格式一般为：`yyyy-MM-dd HH:mm:ss`。
+   
+   > [!IMPORTANT]
+   >
+   > `yyyy` 是小写！大写的 `YYYY` 的意思有些不同——“将这一年中第一周的周日当作今年的第一天”，因此有时结果和 `yyyy` 相同，有时就会不同。
 2. 将 `NSDate` 对象转换成特定格式的字符串。
 
    转换后的字符串会根据设备的“区域格式”，显示特定语言的结果。假如程序需要保证不同语言环境下显示一致，请注意这方面的问题，使用其他代替方法！
 
 日期格式RFC文档：[Date_Format_Patterns](http://www.unicode.org/reports/tr35/tr35-25.html#Date_Format_Patterns)
 
-```objectivec
+```objective-c
 NSDate *date = [NSDate date];
 NSLog(@"date = %@\n",date);
 // date = 2017-10-27 05:03:09 +0000
@@ -327,11 +331,13 @@ NSLog(@"%@",[dateFormatter stringFromDate:date]);
 
 * **NSDate** 对象 —> 格式化日期字符串
 
-```objectivec
+```objective-c
 NSDate *date = [NSDate date];
+
 //设置日期的格式 ：2015年01月03日 03：32：12
 NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 [dateFormat setDateFormat:@"yyyy年MM月dd日 HH:mm:ss"];
+
 NSString *dateString = [dateFormat stringFromDate:date];
 NSLog(@"当前系统时间：%@ \n 格式化后的时间字符串：%@",date,dateString);
 ```
@@ -339,9 +345,9 @@ NSLog(@"当前系统时间：%@ \n 格式化后的时间字符串：%@",date,dat
 >**当前系统时间：** **2017-04-13 04:38:23 +0000**
 >**格式化后的时间字符串：** **2017** **年** **04** **月** **13** **日** **12:38:23**
 
-* 日期字符串 —> **NSDate** 对象
+* 日期字符串 —> `NSDate` 对象
 
-```objectivec
+```objective-c
 //----------------------------------------------------------
 NSString *str = @"2014-03-21 15:55:55";
 // 设置字符串的日期格式
@@ -359,15 +365,19 @@ NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 // dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
 // ISO 8601: 2019-08-27T00:00:00.000+0000
 [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    
+
 NSDate *date = [dateFormatter dateFromString:dateString];
-DDLogDebug(@"date = %@",date); // date = 2019-08-27 00:00:00 +0000
+NSLog(@"date = %@",date); // date = 2019-08-27 00:00:00 +0000
 ```
-> ⚠️ 日期字符串转换为 **NSDate** 对象时，设置的 **NSDateFormatter** 对象是字符串的日期格式，而不是转换后的 **NSDate** 对象格式。
+> [!IMPORTANT]
+>
+> 日期字符串转换为 `NSDate` 对象时，设置的 `NSDateFormatter` 对象是字符串的日期格式，而不是转换后的 `NSDate` 对象格式。
 
-* NSString —> NSDate —> NSString
 
-```objectivec
+
+* `NSString` —> `NSDate` —> `NSString`
+
+```objective-c
 // YYModel 框架方法、DateTool 方法
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
 
@@ -382,12 +392,12 @@ DDLogDebug(@"date = %@",date); // date = 2019-08-27 00:00:00 +0000
     return YES;
 }
 
-``` 
+```
 
 
 * **NSDateFormatterStyle**
 
-```objectivec
+```objective-c
 typedef NS_ENUM(NSUInteger, NSDateFormatterStyle) {    // date and time format styles
     NSDateFormatterNoStyle = kCFDateFormatterNoStyle,
     NSDateFormatterShortStyle = kCFDateFormatterShortStyle,
@@ -399,13 +409,13 @@ typedef NS_ENUM(NSUInteger, NSDateFormatterStyle) {    // date and time format s
 
 代码示例：
 
-```objectivec
+```objective-c
 - (NSDateFormatter *)dateFormatter  
 {  
     static NSDateFormatter *dateFormatter;  
     if (!dateFormatter) {  
         dateFormatter = [[NSDateFormatter alloc] init];  
-          
+
         dateFormatter = [[NSDateFormatter alloc] init];  
         // NSDateFormatterStyle几种取值样式  
         // NSDateFormatterNoStyle  
@@ -430,8 +440,6 @@ typedef NS_ENUM(NSUInteger, NSDateFormatterStyle) {    // date and time format s
 ```
 
 
-
-
 # NSTimeZone
 
 * 时区是一个地理名字，是为了克服各个地区或国家之间在使用时间上的混乱。
@@ -447,8 +455,6 @@ typedef NS_ENUM(NSUInteger, NSDateFormatterStyle) {    // date and time format s
 5. iOS中的时间类 **NSDate** 中存储的时间，都是相对于 **GMT** 的，我们使用 **NSDate** 时，会根据App的时区设置返回与时区对应的数据。
 6. iOS系统中的 ```/usr/share/zoneinfo/```目录中保存了所有的可根据 地理位置名称 或 时区别名 得到的时区信息。时区别名都是与具体的地理位置一一对应的。(已越狱的童鞋请看)
 7. iOS中的时区表示方法：```GMT+0800``` 、```GMT-0800```。(【+：东区】【 -：西区】【 08：小时数】【 00：分钟数】)。 ```GMT+0830 ```就是指比GMT早8小时外加30分钟的时区。
-
-
 
 
 ### 方法
@@ -472,23 +478,21 @@ typedef NS_ENUM(NSUInteger, NSDateFormatterStyle) {    // date and time format s
   由时区名称缩写获得对应的NSTimeZone对象
   > 这里的时区名称缩写有两种情况：
   >
-  > * 第一种是上面说的HKT这样的缩写，与时区名称一一对应，通过这样的缩写获得的NSTimeZone对象，与使用时区名称获得得NSTimeZone对象一样。（大概读取得是同一个时区文件）
-  > * 第二种是"GMT+0800"这样格式得缩写，其实这就是偏移量。通过偏移量在iOS中是不能读到与之对应得时区文件的，因此就无法知道“时区名称”，“名称缩写”，“是否使用夏时制”这样的信息了。默认情况下，"时区名称"和"名称缩写"都会赋值为"GMT+0800"，"是否使用夏时制"则不会设置（默认不使用）。
+  > * 第一种是上面说的 HKT 这样的缩写，与时区名称一一对应，通过这样的缩写获得的 `NSTimeZone` 对象，与使用时区名称获得得 `NSTimeZone` 对象一样。（大概读取得是同一个时区文件）
+  > * 第二种是"GMT+0800"这样格式得缩写，其实这就是偏移量。通过偏移量在 iOS 中是不能读到与之对应得时区文件的，因此就无法知道“时区名称”，“名称缩写”，“是否使用夏时制”这样的信息了。默认情况下，"时区名称"和"名称缩写"都会赋值为"GMT+0800"，"是否使用夏时制"则不会设置（默认不使用）。
 
 
 + ```+ (id)timeZoneForSecondsFromGMT:(NSInteger)seconds;``` 
   由偏移量获得对应的NSTimeZone对象
 
-  > 只说一点：通过偏移量获得的 **NSTimeZone** 对象的“市区名称”，“名称缩写”都会赋值为"GMT+0800"，"是否使用夏时制"则不会设置（默认不使用）。
+  > 只说一点：通过偏移量获得的 `NSTimeZone` 对象的“市区名称”，“名称缩写”都会赋值为"GMT+0800"，"是否使用夏时制"则不会设置（默认不使用）。
   >  注意！！！！该方法不做参数的范围检查！！！
-
-
 
 
 ### 根据指定时区格式化日期
 
 
-```objectivec
+```objective-c
 NSDate *date = [NSDate date];
 //设置日期的格式
 NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -509,13 +513,11 @@ NSLog(@"当前时间：%@ \n纽约时间:%@",date,dateString);
 >
 > **纽约时间：** **2017** **年** **04** **月** **13** **日** **00:46:23**
 
-
-
 # NSLocale
 
-若你只开发中国区的应用，需要保证用户修改当前语言环境时应用的显示不发生变化。而像NSDateFormatter这样的类，会根据设备的设置，自动返回不同语言的数据。为了保证返回数据的语言一致，我们需要设置NSLocale。 下面的代码就可以保证在任何语言环境下，只返回中文的数据：
+若你只开发中国区的应用，需要保证用户修改当前语言环境时应用的显示不发生变化。而像 `NSDateFormatter` 这样的类，会根据设备的设置，自动返回不同语言的数据。为了保证返回数据的语言一致，我们需要设置 `NSLocale`。 下面的代码就可以保证在任何语言环境下，只返回中文的数据：
 
-```objectivec
+```objective-c
 NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh"];
 NSDateFormatter *secondDateFormatter = [[NSDateFormatter alloc] init];
 [secondDateFormatter setDateFormat:@"cccc"];
@@ -526,7 +528,7 @@ NSLog(@"%@", [secondDateFormatter stringFromDate:date]);
 
 当然，像上面的需求很罕见。
 
-作为大家都不常用的一个类，NSLocale类是将与国家和语言相关的信息进行简单的组合，包括货币，文学方面的信息。 货币：货币的国际名称（人民币的国际货币名称是CNY）；货币符号（人民币的国际货币符号是¥） 文学：标点符号，文字的书写顺序（左右顺序），引用的起止符号等等 若做金融一类的应用可能会用到NSLocale这个类。
+作为大家都不常用的一个类，`NSLocale` 类是将与国家和语言相关的信息进行简单的组合，包括货币，文学方面的信息。 货币：货币的国际名称（人民币的国际货币名称是CNY）；货币符号（人民币的国际货币符号是¥） 文学：标点符号，文字的书写顺序（左右顺序），引用的起止符号等等 若做金融一类的应用可能会用到NSLocale这个类。
 
 
 # 附录
@@ -535,7 +537,7 @@ NSLog(@"%@", [secondDateFormatter stringFromDate:date]);
 
 * [UNICODE LOCALE DATA MARKUP LANGUAGE (LDML)](http://unicode.org/reports/tr35/tr35-10.html#Date_Format_Patterns)
 
-```objectivec
+```tex
 // -------------------------------------------------------------
 d 月中的某一天。一位数的日期没有前导零。  
 
@@ -621,7 +623,7 @@ zzz 完整时区偏移量(“+”或“-”后 跟有小时和分钟)。一位�
 
 
 
-### 参考
+# 参考
 
 * [Unicode Technical Standard #35 - Unicode Locale Data Markup Language (LDML)](http://www.unicode.org/reports/tr35/tr35-25.html)
 * [iOS时间那点事--NSDate](https://my.oschina.net/yongbin45/blog/150114)
