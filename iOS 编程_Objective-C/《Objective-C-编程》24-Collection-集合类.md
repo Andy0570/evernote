@@ -79,8 +79,41 @@ BOOL isContain = [set1 containsObject:@"李四"];
 ```
 
 * `NSSet` 对象中的对象是无序的，所以不能通过索引来访问，只能向 `NSSet` 对象查询某一个对象是否存在。
-* 当 `NSSet` 收到 `- (BOOL)containsObject:(ObjectType)anObject;` 消息时，会在其包含的对象中查找和 anObject **相等**的对象 (内容相同，地址可能不同，也就是说可能 【指针指向的内容是相等的】，但是他们两个【未必是同一块地址】，返回 **YES**)。
+* 当 `NSSet` 收到 `- (BOOL)containsObject:(ObjectType)anObject;` 消息时，会在其包含的对象中查找和 anObject **相等**的对象 (内容相同，地址可能不同，也就是说可能 【指针指向的内容是相等的】，但是他们两个【未必是同一块地址】，返回  `YES`)。
 * 因此，相同的变量（指针指向同一块内存地址）一定是相等的，而相等的变量不一定是相同的。
+
+---
+
+在使用 `NSSet` 查找 `NSString` 元素时，需要注意的是，`NSSet` 中的元素是无序的，因此查找的顺序可能会影响查找效率。此外，`NSSet` 中的元素必须是可哈希的，因此 `NSString` 是可以直接使用的，而 `NSMutableString` 则不可以。
+
+---
+
+- `containsObject:` 方法使用的是等价性测试（通过调用对象的 `isEqual:` 方法）来确定对象是否存在于集合中，而不是简单地通过引用比较。这意味着即使两个对象在其他方面相同，只要它们的指针（内存地址）不同，它们就会被认为是不同的对象。
+- 对于自定义对象，确保你的对象类实现了 `isEqual:` 和 `hash` 方法，这样它们才能正确地被 `NSSet` 识别和比较。
+
+```objective-c
+@interface MyCustomObject : NSObject
+@property (nonatomic, strong) NSString *name;
+@end
+
+@implementation MyCustomObject
+- (BOOL)isEqual:(id)other {
+    if (other == self) {
+        return YES;
+    }
+    if (!other || ![other isKindOfClass:[MyCustomObject class]]) {
+        return NO;
+    }
+    return [self.name isEqualToString:((MyCustomObject *)other).name];
+}
+ 
+- (NSUInteger)hash {
+    return [self.name hash];
+}
+@end
+```
+
+这样，当你将自定义对象添加到 `NSSet` 中时，会根据对象的属性（如名称）来确保唯一性。
 
 
 ## NSMutableSet
