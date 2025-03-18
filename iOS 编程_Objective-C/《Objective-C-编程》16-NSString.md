@@ -217,6 +217,7 @@ NSArray *listItems = [list componentsSeparatedByString:@", "];
 
 ```objectivec
 NSString *string = @"andywhm@163.com";
+
 // substringToIndex: 从起始位置截取到指定位置（不包含指定位置）
 NSString *substring1 = [string substringToIndex:7];
 NSLog(@"substring1:%@",substring1); // substring1:andywhm
