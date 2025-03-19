@@ -22,10 +22,6 @@ Text（ `text`、`attributedText` ）、`textColor`、`font`、`textAligment`、
 
   ![](http://upload-images.jianshu.io/upload_images/2648731-3f8468cceb702616.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-  
-
-
-
 * `textAligment` ：文本对齐方式，默认设置为 `NSTextAlignmentNatural`，实际测试默认为左对齐，即`NSTextAlignmentLeft`。
 
   ```objectivec
@@ -44,26 +40,21 @@ Text（ `text`、`attributedText` ）、`textColor`、`font`、`textAligment`、
       } NS_ENUM_AVAILABLE_IOS(6_0);
   ```
 
-  
 
 
-*  `numberOfLines`：默认为1行。如果设置为 0，则代表不限制行数。
+*  `numberOfLines`：默认为 1 行。如果设置为 0，则代表不限制行数。
 
-* `enabled` ：此属性仅确定标签的绘制方式。 禁用时文字有些暗淡，表示它处于非活动状态。 此属性默认设置为YES。
+* `enabled` ：此属性仅确定标签的绘制方式。 禁用时文字有些暗淡，表示它处于非活动状态。 此属性默认设置为 `YES`。
 
-   如图所示：上方为 `enabled = NO`,下方为  `enabled = YES`。
+   如图所示：上方为 `enabled = NO`，下方为  `enabled = YES`。
 
    ![](http://upload-images.jianshu.io/upload_images/2648731-591635bd3ba14397.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
-
-*  `highlighted`: 高亮属性，该属性用于当 UILabel 作为其他控件的子视图时，作为按下状态时的属性。
+*  `highlighted`: 高亮属性，该属性用于当 `UILabel` 作为其他控件的子视图时，作为按下状态时的属性。
 
    > the 'highlight' property is used by subclasses for such things as pressed states. it's useful to make it part of the base class as a user property.
 
 * `userInteractionEnabled`: 是否能与用户交互？
-
-
 
 
 ### Spacing attributes 间距属性
@@ -81,13 +72,9 @@ Baseline ( `baselineAdjustment` )、LineBreaks （ `lineBreakMode`）、Autoshri
       UIBaselineAdjustmentNone,               // 文本最低端与label中线对齐
   };
   ```
+从左至右分别为：0、1、2 三种情况：
 
-
-      从左至右分别为：0、1、2 三种情况：
-
-      ![](http://upload-images.jianshu.io/upload_images/2648731-8080621c80879a87.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://upload-images.jianshu.io/upload_images/2648731-8080621c80879a87.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 * `lineBreakMode`：超出 label 边界的文字截取方式。
 
@@ -102,15 +89,10 @@ Baseline ( `baselineAdjustment` )、LineBreaks （ `lineBreakMode`）、Autoshri
   } NS_ENUM_AVAILABLE(10_0, 6_0);
   ```
 
-  
 
 ### Advanced appearance attributes 高级外观属性
 
 `highlightedTextColor`、`shadowColor`、`shadowOffset`
-
-
-
-
 
 ## 使用 UILabel
 
@@ -163,11 +145,7 @@ label2.minimumScaleFactor = 0.5;
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-21fbbd3f02cd87bd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
-
-
-
-### 如何根据字符串长度设置 label 的`frame` ？
+### 如何根据字符串长度设置 label 的 `frame` ？
 
 根据字符串长度计算出 `CGSize`，然后赋值给 label 的`frame`：
 
@@ -179,7 +157,7 @@ label2.minimumScaleFactor = 0.5;
 - (CGRect)boundingRectWithSize:(CGSize)size options:(NSStringDrawingOptions)options attributes:(nullable NSDictionary<NSString *, id> *)attributes context:(nullable NSStringDrawingContext *)context NS_AVAILABLE(10_11, 7_0);
 ```
 
-#### 方法一示例代码：
+#### 方法一，示例代码：
 
 ```objectivec
 // 需要显示的字符串
@@ -191,13 +169,14 @@ CGSize stringSize = [string sizeWithAttributes:@{NSFontAttributeName:font}];
 NSLog(@"(%f,%f)",stringSize.width,stringSize.height); // (123.651484,23.867188)
 ```
 
-> ⚠️ 
+> [!NOTE]
 >
-> 需要注意的是，该方法返回的 `CGSize` 是行数为1的情况下，计算出来的 Size。当它超过屏幕的宽度（`[UIScreen mainScreen].bounds.size.width`）时，还会存在文本显示不完全的问题。
+> 需要注意的是，该方法返回的 `CGSize` 是行数为 1 的情况下，计算出来的 Size。当它超过屏幕的宽度（`[UIScreen mainScreen].bounds.size.width`）时，还会存在文本显示不完全的问题。
 >
 > 因此，该方法仅适用于短文本，还有一种情况是做跑马灯效果时会用到这种方法。
 
-#### 方法二示例代码1：
+#### 方法二，示例代码1：
+
 相对于上者，此方法需要传入一个 `CGSize` 参数来限制最大宽高尺寸，可以处理多行文本情况。
 
 ```objectivec
@@ -221,7 +200,7 @@ NSLog(@"(%f,%f)",stringSize.width,stringSize.height); // (123.651484,23.867188)
 }
 ```
 
-#### 方法二示例代码2：
+#### 方法二，示例代码2：
 
 ```objectivec
 - (CGSize)sizeForFont:(UIFont *)font size:(CGSize)size mode:(NSLineBreakMode)lineBreakMode {
@@ -255,9 +234,9 @@ NSLog(@"(%f,%f)",stringSize.width,stringSize.height); // (123.651484,23.867188)
 > * -(CGFloat)heightForFont:(UIFont *)font width:(CGFloat)width;
 
 
-### 根据文本内容调整UILabel对象的大小
+### 根据文本内容调整 `UILabel` 对象的大小
 
-**UIView** 中的两个方法：
+`UIView` 中的两个方法：
 
 ```objectivec
 - (CGSize)sizeThatFits:(CGSize)size;     
@@ -315,9 +294,8 @@ label3.numberOfLines = 0;
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-fbfd4769dcada102.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
----
+------
 
-###  
 
 #### `sizeThatFits:` 代码示例一：
 
@@ -422,8 +400,6 @@ label.layer.cornerRadius = 3;
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-b1b3782f400ed7da.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
-
 ---
 
 ### 设置圆角和边框
@@ -446,8 +422,6 @@ label.layer.borderColor = [UIColor flatSkyBlueColor].CGColor;
 ```
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-b32be9eaf2bdd7bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 ---
 
@@ -482,8 +456,6 @@ label.frame = CGRectMake(15, 150, size.width, size.height);
 ```
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-bb87fd515de5a85a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 ---
 
@@ -525,8 +497,6 @@ label.frame = CGRectMake(15, 150, size.width, size.height);
 }
 ```
 
-
-
 ### 设置阴影：    
 ```objectivec
 // 设置阴影颜色
@@ -538,8 +508,6 @@ label.shadowOffset = CGSizeMake(1.5, 1.5);
 ```
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-a7b47474c2a414a5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 ### 分散对齐标题文字
 
@@ -611,9 +579,9 @@ label.shadowOffset = CGSizeMake(1.5, 1.5);
 
 ### 给文字添加描边效果
 
-UILabel 自定义文本样式，在文件夹上点击右键，弹出右键菜单，选择添加新文件选项,创建一个以UILabel为父类的子类。
+`UILabel` 自定义文本样式，在文件夹上点击右键，弹出右键菜单，选择添加新文件选项,创建一个以 `UILabel` 为父类的子类。
 
-**NewUILabel.h** 文件
+**`NewUILabel.h`** 文件
 
 ```objectivec
 #import <UIKit/UIKit.h>
@@ -628,7 +596,7 @@ UILabel 自定义文本样式，在文件夹上点击右键，弹出右键菜单
 @end
 ```
 
-**NewUILabel.m** 文件
+**`NewUILabel.m`** 文件
 
 ```objectivec
 #import "NewUILabel.h"
@@ -684,8 +652,6 @@ self.view.backgroundColor = [UIColor purpleColor];;
 
   ![](http://upload-images.jianshu.io/upload_images/2648731-bd561e8c256ec619.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
-
 ### 添加自定义字体包
 如果系统提供的标准字体无法满足需求，也可以添加自定义字体包，步骤：
 1. 拖拽所需要的 .ttf 格式文件的字体（字体查询：https://fonts.google.com）到项目中，如果你的字体包文件是 .otf 格式的，也可以去[这个网站](https://www.fontsquirrel.com/tools/webfont-generator)上进行转换，先上传 .otf 格式文件，再转换为 TrueType 类型并下载：
@@ -731,9 +697,7 @@ label.center = self.view.center;
 }];
 ```
 
-    
-
-### 附:不同苹方字体San Francisco的Label尺寸
+### 附:不同苹方字体 San Francisco 的 Label 尺寸
 
 测试字体：`[UIFont systemFontOfSize:font weight:UIFontWeightRegular]`
 
@@ -753,9 +717,7 @@ label.center = self.view.center;
 |  20  | 20.5  |   24   |
 |  30  | 30.5  |   36   |
 
-
-
-### 参考：
+### 参考： 
 
 * [苹果旧金山字体的秘密 @可乐橙](http://colachan.com/post/3463)
 * [表单设计:一页只做一件事 @可乐橙](http://colachan.com/post/3552)
