@@ -1,9 +1,9 @@
 * **GitHub 地址：**[PageMenu](https://github.com/uacaps/PageMenu)
 * **star:** 5.1k
 
-⚠️ 该库已不再维护！
-
-> 🎉 🎉 🎉  Surprise ！ I'm back！ 本期给大家带来的第三方框架是一个分页菜单控制器——**PageMenu**。该框架同时支持 Swift 和 Objective-C，使用起来也是极其方便，下面一起来跟我看看吧!
+> [!WARNING]
+>
+> 该库已不再维护！
 
 ## 描述
 
