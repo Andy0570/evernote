@@ -384,7 +384,7 @@ location = <EOCLocation: 0x100300190> {
 
 - 尽量创建不可变的对象。
 - 若某属性仅可于对象内部修改，则在“class-continuation分类”中将其由 `readonly`  属性扩展为 `readwrite` 属性。
-- 不要把可变的 collection 作为属性公开，而应提供相关方法，一次修改对象中的可变collection。
+- 不要把可变的 collection 作为属性公开，而应提供相关方法，一次修改对象中的可变 collection。
 
 
 

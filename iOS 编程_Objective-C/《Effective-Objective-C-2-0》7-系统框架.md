@@ -331,7 +331,7 @@ CFMutableDictionaryRef CFDictionaryCreateMutable(
       CFDictionaryEqualCallBack		equal;
       CFDictionaryHashCallBack		hash;
   } CFDictionaryKeyCallBacks;
-
+  
   typedef struct {
       CFIndex				version;
       CFDictionaryRetainCallBack		retain;
@@ -339,7 +339,7 @@ CFMutableDictionaryRef CFDictionaryCreateMutable(
       CFDictionaryCopyDescriptionCallBack	copyDescription;
       CFDictionaryEqualCallBack		equal;
   } CFDictionaryValueCallBacks;
-
+  
   /*
    * version参数目前应设为0。当前编程时总是取这个值，不过将来苹果公司也许会修改此结构体，所以
    * 要预留该值以表示版本号。这个参数可以用于检测新版与旧版数据结构之间是否兼容。
@@ -373,14 +373,12 @@ CFMutableDictionaryRef CFDictionaryCreateMutable(
 #import <Foundation/Foundation.h>
 
 // Network fetcher class
-typedef void(^EOCNetworkFetcherCompletionHandler)
-                                (NSData *data);
+typedef void(^EOCNetworkFetcherCompletionHandler)(NSData *data);
 
 @interface EOCNetworkFetcher : NSObject
 @property (nonatomic, strong, readonly) NSURL *url;
 - (instancetype)initWithURL:(NSURL *)url;
-- (void)startWithCompletionHandler:
-            (EOCNetworkFetcherCompletionHandler)completion;
+- (void)startWithCompletionHandler:(EOCNetworkFetcherCompletionHandler)completion;
 @end
 
 // EOCNetworkFetcher.m
@@ -421,7 +419,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
     if (cacheData) {
         // Cache hit
         [self useData:cacheData];
-    }else {
+    } else {
         // Cache miss,缓存中没有访问者所需的数据
         EOCNetworkFetcher *fetcher = [[EOCNetworkFetcher alloc] initWithURL:url];
         [fetcher startWithCompletionHandler:^(NSData *data) {
@@ -431,7 +429,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 }
 ```
 
-* **NSPurgeableData** 类，**NSMutableData** 的子类。如果某个对象所占的内存能够根据需要随时丢弃，那么就可以实现 **NSDiscardableContent** 协议所定义的接口。
+* **`NSPurgeableData`** 类，**`NSMutableData`** 的子类。如果某个对象所占的内存能够根据需要随时丢弃，那么就可以实现 **`NSDiscardableContent`** 协议所定义的接口。
 
   ```objective-c
   - (void)downloadDataForURL:(NSURL *)url {
@@ -469,9 +467,9 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 #### 要点
 
-* 实现缓存时应选用 **NSCache** 而非 **NSDictionary** 对象。因为 **NSCache** 可以提供优雅的自动删减功能，而且是线程安全的，此外，它与字典不同，并不会拷贝键。
-* 可以给 **NSCache** 对象设置上限，用以限制缓存中的对象总个数及总成本，而这些尺度则定义了缓存删减其中对象的时机。但是绝对不要把这些尺度当成可靠的硬限制，他们仅对 **NSCache** 起指导作用。
-* 将 **NSPurgeableData** 与 **NSCache** 搭配使用，可实现自动清除数据的功能，也就是说，当**NSPurgeableData** 对象所占内存为系统丢弃时，该对象自身也会从缓存中移除。
+* 实现缓存时应选用 **`NSCache`** 而非 **`NSDictionary`** 对象。因为 **`NSCache`** 可以提供优雅的自动删减功能，而且是线程安全的，此外，它与字典不同，并不会拷贝键。
+* 可以给 **`NSCache`** 对象设置上限，用以限制缓存中的对象总个数及总成本，而这些尺度则定义了缓存删减其中对象的时机。但是绝对不要把这些尺度当成可靠的硬限制，他们仅对 **`NSCache`** 起指导作用。
+* 将 **`NSPurgeableData`** 与 **`NSCache`** 搭配使用，可实现自动清除数据的功能，也就是说，当 **`NSPurgeableData`** 对象所占内存为系统丢弃时，该对象自身也会从缓存中移除。
 * 如果缓存使用得当。那么应用程序的响应速度就能提高。只有那种重新计算起来很费事的数据，才值得放入缓存，比如那些需要从网络获取或从磁盘读取的数据。
 
 
@@ -524,7 +522,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 ### 第52条：别忘了 NSTimer 会保留其目标对象
 
-* **Foundation** 框架中有个类叫做 **NSTimer** ，开发者可以指定绝对的日期与时间，以便到时执行任务，也可以指定执行任务的相对延迟时间。计时器还可以重复运行任务，有个与之相关联的“间隔值”（interval) 可用来指定任务的触发频率。
+* **Foundation** 框架中有个类叫做 `NSTimer` ，开发者可以指定绝对的日期与时间，以便到时执行任务，也可以指定执行任务的相对延迟时间。计时器还可以重复运行任务，有个与之相关联的“间隔值”（interval) 可用来指定任务的触发频率。
 * 只有把计时器放在运行循环里，它才能正常触发任务。
 
 ```objective-c
@@ -539,31 +537,31 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 * 由于计时器会保留其目标对象，所以反复执行任务通常会导致应用程序出问题。也就是说，设置成重复执行模式的那种计时器，很容易引人“保留环”。
 
-  ```
+  ```objective-c
   //  EOCClass.h
   #import <Foundation/Foundation.h>
-
+  
   @interface EOCClass : NSObject
   - (void)startPolling;
   - (void)stopPolling;
   @end
-
+  
   //  EOCClass.m
   #import "EOCClass.h"
-
+  
   @implementation EOCClass {
       // ❇️ EOCClass → _pollTimer
       NSTimer *_pollTimer;
   }
-
+  
   - (instancetype)init {
       return [super init];
   }
-
+  
   - (void)dealloc {
       [_pollTimer invalidate];
   }
-
+  
   - (void)startPolling {
       // ❇️ _pollTimer → EOCClass
       _pollTimer =
@@ -573,16 +571,16 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
                                      userInfo:nil
                                       repeats:YES];
   }
-
+  
   - (void)stopPolling {
       [_pollTimer invalidate];
       _pollTimer = nil;
   }
-
+  
   - (void)p_doPoll {
       // Poll the resource
   }
-
+  
   @end
   ```
 
@@ -591,19 +589,19 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
   ```objective-c
   //  NSTimer+EOCBlocksSupport.h
   #import <Foundation/Foundation.h>
-
+  
   @interface NSTimer (EOCBlocksSupport)
-
+  
   + (NSTimer *)eoc_scheduledTimerWithTimeInterval:(NSTimeInterval)interval
                                             block:(void(^)())block
                                           repeats:(BOOL)repeats;
   @end
-
+  
   //  NSTimer+EOCBlocksSupport.m
   #import "NSTimer+EOCBlocksSupport.h"
-
+  
   @implementation NSTimer (EOCBlocksSupport)
-
+  
   + (NSTimer *)eoc_scheduledTimerWithTimeInterval:(NSTimeInterval)interval
                                             block:(void(^)())block
                                           repeats:(BOOL)repeats {
@@ -611,14 +609,14 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
                                            target:self
                                          selector:@selector(eoc_blockInvoke:) userInfo:[block copy] repeats:repeats];
   }
-
+  
   + (void)eoc_blockInvoke:(NSTimer *)timer {
       void (^block)() = timer.userInfo;
       if (block) {
           block();
       }
   }
-
+  
   @end
   ```
 
@@ -642,7 +640,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 #### iOS 10.0 中已经引入了该方法
 
-```
+```objective-c
 + (NSTimer *)timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block;
 
 + (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block;
@@ -651,9 +649,9 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 #### 要点
 
-* NSTimer 对象会保留其目标，直到计时器本身失效为止，调用 `invalidate` 方法可令计时器失效，另外，一次性的计时器在触发完任务之后也会失效。
+* `NSTimer` 对象会保留其目标，直到计时器本身失效为止，调用 `invalidate` 方法可令计时器失效，另外，一次性的计时器在触发完任务之后也会失效。
 * 反复执行任务的计时器，很容易引入保留环，如果这种计时器的目标对象又保留了计时器本身，那肯定会导致循环引用。这种循环引用，可能是直接发生的，也可能是通过对象图里的其他对象间接发生的。
-* 可以扩充 NSTimer 的功能，用块来打破循环引用。不过，除非 NSTimer 将来在公共接口里提供此功能，否则必须创建分类，将相关实现代码加入其中。
+* 可以扩充 `NSTimer` 的功能，用块来打破循环引用。不过，除非 `NSTimer` 将来在公共接口里提供此功能，否则必须创建分类，将相关实现代码加入其中。
 
 
 

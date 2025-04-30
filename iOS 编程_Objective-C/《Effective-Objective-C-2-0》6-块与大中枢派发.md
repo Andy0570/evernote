@@ -4,9 +4,9 @@
 
 > block、块、Block 块、Block 对象在大多数 Objective-C 文档中语义相同。
 
- **block** 是一种可在 C、C++ 及 Objective-C 代码中使用的“词法闭包"（lexical closure)，借由此机制，开发者可将代码像对象一样传递，令其在不同环境（context）下运行。还有个关键的地方是，在定义 block 的范围内，它可以访问到其中的全部变量。
+ **block** 是一种可在 C、C++ 及 Objective-C 代码中使用的“词法闭包”（lexical closure)，借由此机制，开发者可将代码像对象一样传递，令其在不同环境（context）下运行。还有个关键的地方是，在定义 block 的范围内，它可以访问到其中的全部变量。
 
-**GCD** 是一种与 block 有关的技术，它提供了对线程的抽象，而这种抽象则基于“派发队列” (dispatch queue) 。开发者可将块排入队列中，由GCD负责处理所有调度事宜。GCD会根据系统资源情况，适时地创建、复用、摧毁后台线程（background thread)，以便处理每个队列。 此外，使用GCD还可以方便地完成常见编程任务，比如编写 “只执行一次的线程安全代码” (thread-safe single-code execution)，或者根据可用的系统资源来并发执行多个操作。
+**GCD** 是一种与 block 有关的技术，它提供了对线程的抽象，而这种抽象则基于“派发队列” (dispatch queue) 。开发者可将块排入队列中，由 GCD 负责处理所有调度事宜。GCD 会根据系统资源情况，适时地创建、复用、摧毁后台线程（background thread)，以便处理每个队列。 此外，使用 GCD 还可以方便地完成常见编程任务，比如编写 “只执行一次的线程安全代码” (thread-safe single-code execution)，或者根据可用的系统资源来并发执行多个操作。
 
 
 
@@ -54,9 +54,9 @@ int (^addBlock)(int a, int b) = ^(int a, int b) {
 int add = addBlock(2, 5);
 ```
 
-* 如果block所捕获的变量是对象类型，那么就会自动保留它。系统在释放这个块的时候，也会将其一并释放。
-* **block本身可视为对象**，它也有引用计数。
-* 如果将block定义在 Objective-C 类的实例方法中，那么除了可以访问类的所有实例变童之外，还可以使用 `self` 变量。block总能修改实例变量，所以在声明时无须加 `_block`。不过，如果通过读写操作捕获了实例变量，那么也会自动把 `self` 变量一并捕获，因为实例变量是与`self`所指代的实例关联在一起的。
+* 如果 block 所捕获的变量是对象类型，那么就会自动保留它。系统在释放这个块的时候，也会将其一并释放。
+* **block 本身可视为对象**，它也有引用计数。
+* 如果将 block 定义在 Objective-C 类的实例方法中，那么除了可以访问类的所有实例变童之外，还可以使用 `self` 变量。block 总能修改实例变量，所以在声明时无须加 `_block`。不过，如果通过读写操作捕获了实例变量，那么也会自动把 `self` 变量一并捕获，因为实例变量是与`self`所指代的实例关联在一起的。
 
 
   ```objective-c
@@ -70,7 +70,7 @@ int add = addBlock(2, 5);
   }
   ```
 
-* 在block中，直接访问实例变量和通过 `self` 来访问该实例变量是等效的。
+* 在 block 中，直接访问实例变量和通过 `self` 来访问该实例变量是等效的。
 *  `self` 也是个对象，因而 block 在捕获它时也会将其保留。如果 `self` 所指代的那个对象同时也保留了块，那么这种情况通常就会导致**引用循环**。
 
 #### 块的内部结构
@@ -197,9 +197,9 @@ typedef void(^EOCCompletionHandler)
 
 ### 第39条：用 handler 块降低代码分散程度
 
-为用户界面编码时，一种常用的范式就是“异步执行任务”（perform task asynchronously)。这种范式的好处在于：处理用户界面的显示及触摸操作所用的线程，不会因为要执行I/O或网络通信这类耗时的任务而阻塞。这个线程通常称为主线程（main thread)。
+为用户界面编码时，一种常用的范式就是“异步执行任务”（perform task asynchronously)。这种范式的好处在于：处理用户界面的显示及触摸操作所用的线程，不会因为要执行 I/O 或网络通信这类耗时的任务而阻塞。这个线程通常称为主线程（main thread)。
 
-异步方法在执行完任务之后，需要以某种手段通知相关代码。实现此功能有很多办法。常用的技巧是设计一个委托协议（参见第23条)，令关注此事件的对象遵从该协议。对象成为delegate之后，就可以在相关事件发生时（例如某个异步任务执行完毕时）得到通知了。
+异步方法在执行完任务之后，需要以某种手段通知相关代码。实现此功能有很多办法。常用的技巧是设计一个委托协议（参见第23条)，令关注此事件的对象遵从该协议。对象成为 delegate 之后，就可以在相关事件发生时（例如某个异步任务执行完毕时）得到通知了。
 
 **Delegate** 模式：
 
@@ -222,10 +222,8 @@ typedef void(^EOCCompletionHandler)
 其他类则可以像下面这样使用此类所提供的 API 并遵守实现相应的 delegate 协议：
 ```objective-c
 - (void)fetchFooData {
-    NSURL *url = [[NSURL alloc] initWithString:
-                  @"https://www.pinterest.com"];
-    EOCNetworkFetcher *fetcher =
-        [[EOCNetworkFetcher alloc] initWithURL:url];
+    NSURL *url = [[NSURL alloc] initWithString:@"https://www.pinterest.com"];
+    EOCNetworkFetcher *fetcher = [[EOCNetworkFetcher alloc] initWithURL:url];
     fetcher.delegate = self;
     [fetcher start];
 }
@@ -253,8 +251,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)(NSData *data);
 - (void)fetchFooData {
     NSURL *url = [[NSURL alloc] initWithString:
                   @"https://www.pinterest.com"];
-    EOCNetworkFetcher *fetcher =
-        [[EOCNetworkFetcher alloc] initWithURL:url];
+    EOCNetworkFetcher *fetcher = [[EOCNetworkFetcher alloc] initWithURL:url];
     // 调用 start 方法时直接以内联形式定义 Completion Handler。
     [fetcher startWithCompletionHandler:^(NSData *data) {
         // deal with data
@@ -290,8 +287,7 @@ typedef void(^EOCNetworkFetcherErrorHandler)(NSError *error);
 - (void)fetchFooData {
     NSURL *url = [[NSURL alloc] initWithString:
                   @"https://www.pinterest.com"];
-    EOCNetworkFetcher *fetcher =
-        [[EOCNetworkFetcher alloc] initWithURL:url];
+    EOCNetworkFetcher *fetcher = [[EOCNetworkFetcher alloc] initWithURL:url];
     [fetcher startWithCompletionHandler:^(NSData *data) {
         // deal with data
         
@@ -313,33 +309,29 @@ typedef void(^EOCNetworkFetcherErrorHandler)(NSError *error);
 ```objective-c
 #import <Foundation/Foundation.h>
 
-typedef void(^EOCNetworkFetcherCompletionHandler)
-                                (NSData *data, NSError *error);
+typedef void(^EOCNetworkFetcherCompletionHandler)(NSData *data, NSError *error);
 
 @interface EOCNetworkFetcher : NSObject
 - (instancetype)initWithURL:(NSURL *)url;
-- (void)startWithCompletionHandler:
-            (EOCNetworkFetcherCompletionHandler)handler;
+- (void)startWithCompletionHandler:(EOCNetworkFetcherCompletionHandler)handler;
 @end
 
 // 其他类使用：
 - (void)fetchFooData {
-    NSURL *url = [[NSURL alloc] initWithString:
-                  @"https://www.pinterest.com"];
-    EOCNetworkFetcher *fetcher =
-        [[EOCNetworkFetcher alloc] initWithURL:url];
+    NSURL *url = [[NSURL alloc] initWithString:@"https://www.pinterest.com"];
+    EOCNetworkFetcher *fetcher = [[EOCNetworkFetcher alloc] initWithURL:url];
     // 需要在块代码中检测传人的error变量，并且要把所有逻辑代码都放在一处
     [fetcher startWithCompletionHandler:^(NSData *data, NSError *error) {
         if (error) {
             // handle failure
-        }else {
+        } else {
             // handle success
         }
     }];
 }
 ```
 
-基于 handler 来设计API还有个原因，就是某些代码必须运行在特定的线程上，比如，Cocoa 与 Cocoa Touch 中的 UI 操作必须在主线程上执行：
+基于 handler 来设计 API 还有个原因，就是某些代码必须运行在特定的线程上，比如，Cocoa 与 Cocoa Touch 中的 UI 操作必须在主线程上执行：
 
 ```objective-c
 // NSNotificationCenter
@@ -366,14 +358,14 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 //  EOCNetworkFetcher.h
 #import <Foundation/Foundation.h>
 
-typedef void(^EOCNetworkFetcherCompletionHandler)
-                                (NSData *data);
+typedef void(^EOCNetworkFetcherCompletionHandler)(NSData *data);
 
 @interface EOCNetworkFetcher : NSObject
 @property (nonatomic, strong, readonly) NSURL *url;
+
 - (instancetype)initWithURL:(NSURL *)url;
-- (void)startWithCompletionHandler:
-            (EOCNetworkFetcherCompletionHandler)completion;
+- (void)startWithCompletionHandler:(EOCNetworkFetcherCompletionHandler)completion;
+
 @end
 
 //  EOCNetworkFetcher.m
@@ -381,8 +373,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 @interface EOCNetworkFetcher ()
 @property (nonatomic, strong, readwrite) NSURL *url;
-@property (nonatomic, copy)
-            EOCNetworkFetcherCompletionHandler completionHandler;
+@property (nonatomic, copy) EOCNetworkFetcherCompletionHandler completionHandler;
 @property (nonatomic, strong) NSData *downloadData;
 @end
 
@@ -395,8 +386,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
     return self;
 }
 
-- (void)startWithCompletionHandler:
-        (EOCNetworkFetcherCompletionHandler)completion {
+- (void)startWithCompletionHandler:(EOCNetworkFetcherCompletionHandler)completion {
     self.completionHandler = completion;
     // 开启网络请求
     // 设置 downloadData 属性
@@ -445,8 +435,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 ```objective-c
 - (void)downloadData {
-    NSURL *url = [[NSURL alloc] initWithString:
-                  @"http://www.example.com"];
+    NSURL *url = [[NSURL alloc] initWithString:@"http://www.example.com"];
     EOCNetworkFetcher *networkFetcher = [[EOCNetworkFetcher alloc] initWithURL:url];
     [networkFetcher startWithCompletionHandler:^(NSData *data) {
         // completionHandler → networkFetcher.url
@@ -497,7 +486,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 
 2. **NSRecursiveLock** 递归锁
 
-   * 线程能够多次持有该锁， 而不会出现死锁（deadlock)现象。
+   * 线程能够多次持有该锁， 而不会出现死锁（deadlock）现象。
    * 在极端情况下，同步块会导致死锁。
 
 
@@ -509,7 +498,7 @@ typedef void(^EOCNetworkFetcherCompletionHandler)
 }
 
     // 自定义并发队列
-    // ⚠️注意到，文章中此处作者使用的是全局并发队列，而在 Ray Wenderlich 的GCD系列教程中使用的是自定义并发队列：
+    // !!!: 注意到，文章中此处作者使用的是全局并发队列，而在 Ray Wenderlich 的 GCD 系列教程中使用的是自定义并发队列：
     // 原因在于：全局队列中还可能有其他任务正在执行，一旦加锁就会阻塞其他任务的正常执行，因此我们开辟一个新的自定义并发队列专门处理这个问题。
     _syncQueue = dispatch_queue_create("com.effectiveobjectivec.syncQueue", DISPATCH_QUEUE_CONCURRENT);
 
@@ -573,7 +562,7 @@ dispatch_barrier_async(dispatch_queue_t  _Nonnull queue, ^{
 
 #### 要点
 
-- 派发队列可用来表述同步语义，这种做法要比使用 @synchronized 块或 NSLock 对象更简单。
+- 派发队列可用来表述同步语义，这种做法要比使用 `@synchronized` 块或 `NSLock` 对象更简单。
 - 将同步与异步派发结合起来，可以实现与普通加锁机制一样的同步行为，而这么做却不会阻塞执行异步派发的线程。
 - 使用同步队列及栅栏块，可以令同步行为更加高效。
 
@@ -599,9 +588,9 @@ dispatch_barrier_async(dispatch_queue_t  _Nonnull queue, ^{
 SEL selector;
 if ( /** condition A */ ) {
     selector = @selector(foo);
-}else if ( /** condition B */ ) {
+} else if ( /** condition B */ ) {
     selector = @selector(bar);
-}else {
+} else {
     selector = @selector(baz);
 }
 [self performSelector:selector];
@@ -679,21 +668,21 @@ dispatch_async(dispatch_get_main_queue(), ^{
 
 #### GCD & NSOperation
 
-* GCD 是纯 C 的 API，而 NSOperation（操作队列）则是 Objective-C 的对象。
+* GCD 是纯 C 的 API，而 `NSOperation`（操作队列）则是 Objective-C 的对象。
 
-* 在GCD中，任务用 Block 来表示，而 Block 是个轻量级数据结构（参见第37条）。与之相反，“操作"（operation) 则是个更为重量级的 Objective-C 对象
+* 在 GCD 中，任务用 Block 来表示，而 Block 是个轻量级数据结构（参见第37条）。与之相反，“操作"（operation) 则是个更为重量级的 Objective-C 对象。
 
-* 用 NSOperationQueue 类的 `addOperationWithBlock:` 方法搭配 NSBlockOperation 类来使用操作队列，其语法与纯 GCD 方式非常类似。使用 NSOperation 及 NSOperationQueue 的好处如下：
+* 用 `NSOperationQueue` 类的 `addOperationWithBlock:` 方法搭配 `NSBlockOperation` 类来使用操作队列，其语法与纯 GCD 方式非常类似。使用 `NSOperation` 及 `NSOperationQueue` 的好处如下：
 
-  * 取消某个操作。运行任务之前, 可以在 NSOperation 对象上调用 `cancel` 方法取消任务执行。
+  * 取消某个操作。运行任务之前, 可以在 `NSOperation` 对象上调用 `cancel` 方法取消任务执行。
   * 指定操作间的依赖关系。
-  * 通过键值观测机制（简称 KVO）监控 NSOperation 对象的属性。
-  * 指定操作的优先级。操作的优先级表示此操作与队列中其他操作之间的优先关 系。优先级高的操作先执行，优先级低的后执行。
-  * 重用 NSOperation 对象。
+  * 通过键值观测机制（简称 KVO）监控 `NSOperation` 对象的属性。
+  * 指定操作的优先级。操作的优先级表示此操作与队列中其他操作之间的优先关系。优先级高的操作先执行，优先级低的后执行。
+  * 重用 `NSOperation` 对象。
 
 * 操作队列有很多地方胜过派发队列。操作队列提供了多种预设的执行任务的方式，开发者可以直接使用。
 
-* 有一个API选用了操作队列而非派发队列，这就是 NSNotificationCemer，开发者可通过其中的方法来注册监听器，以便在发生相关事件时得到通知，而这个方法接受的参数是块，不是选择子。
+* 有一个 API 选用了操作队列而非派发队列，这就是 `NSNotificationCemer`，开发者可通过其中的方法来注册监听器，以便在发生相关事件时得到通知，而这个方法接受的参数是块，不是选择子。
 
   ```objective-c
   - (id <NSObject>)addObserverForName:(nullable NSNotificationName)name
@@ -702,7 +691,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
                            usingBlock:(void (^)(NSNotification *note))bloc;
   ```
 
-* 应该尽可能选用高层API，只在确有必要时才求助于底层。笔者也同意这个说法，但我并不盲从。某些功能确实可以用高层的Objective-C方法来做，但这并不等于说它就一定比底层实现方案好。要想确定哪种方案更佳，最好还是测试一下性能。
+* 应该尽可能选用高层 API，只在确有必要时才求助于底层。笔者也同意这个说法，但我并不盲从。某些功能确实可以用高层的 Objective-C 方法来做，但这并不等于说它就一定比底层实现方案好。要想确定哪种方案更佳，最好还是测试一下性能。
 
 #### 要点
 
@@ -747,8 +736,7 @@ dispatch_group_leave(dispatch_group_t group); // 使分组里正要执行的任�
 **dispatch_group_wait** 函数用于等待 **dispatch group** 执行完毕：
 
 ```objective-c
-dispatch_group_wait(dispatch_group_t group, 
-                    dispatch_time_t timeout);
+dispatch_group_wait(dispatch_group_t group, dispatch_time_t timeout);
 ```
 
 
@@ -758,8 +746,7 @@ dispatch_group_wait(dispatch_group_t group,
 令数组中的每个对象都执行某项任务，并且等待所有任务执行完毕:
 
 ```objective-c
-dispatch_queue_t queue =
-    dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0);
+dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0);
 dispatch_group_t group = dispatch_group_create();
 for (id object in collection) {
     dispatch_group_async(group, queue, ^{
@@ -781,8 +768,7 @@ dispatch_group_notify(group, notifyQueue, ^{
 
 ```
 // 自定义串行队列
-dispatch_queue_t queue =
-    dispatch_queue_create("com.effecitveobjectivec.queue", NULL);
+dispatch_queue_t queue = dispatch_queue_create("com.effecitveobjectivec.queue", NULL);
 for (id object in collection) {
     dispatch_async(queue, ^{
         [object performTask];
@@ -795,7 +781,7 @@ dispatch_async(queue, ^{
 
 > 根据系统资源状况来执行任务：
 >
-> 为了执行队列中的块，**GCD会在适当的时机自动创建新线程或复用旧线程。**如果使用并发队列，那么其中有可能会有多个线程，这也就意味着多个块可以并发执行。在并发队列中，执行任务所用的并发线程数量，取决于各种因素，而GCD主要是根据系统资源状况来判定这些因素的。假如CPU有多个核心，并且队列中有大量任务等待执行，那么GCD就可能会给该队列配备多个线程。通过dispatch group所提供的这种简便方式，既可以并发执行一系列给定的任务，又能在全部任务结束时得到通知。由于GCD 有并发队列机制，所以能够根据可用的系统资源状况来并发执行任务。而开发者则可以专注于业务逻辑代码，无须再为了处理并发任务而编写复杂的调度器。
+> 为了执行队列中的块，**GCD 会在适当的时机自动创建新线程或复用旧线程**。如果使用并发队列，那么其中有可能会有多个线程，这也就意味着多个块可以并发执行。在并发队列中，执行任务所用的并发线程数量，取决于各种因素，而GCD主要是根据系统资源状况来判定这些因素的。假如CPU有多个核心，并且队列中有大量任务等待执行，那么GCD就可能会给该队列配备多个线程。通过dispatch group所提供的这种简便方式，既可以并发执行一系列给定的任务，又能在全部任务结束时得到通知。由于GCD 有并发队列机制，所以能够根据可用的系统资源状况来并发执行任务。而开发者则可以专注于业务逻辑代码，无须再为了处理并发任务而编写复杂的调度器。
 
 
 
@@ -811,8 +797,7 @@ dispatch_apply(size_t iterations,
 
 ```objective-c
 // 自定义串行队列
-dispatch_queue_t queue =
-    dispatch_queue_create("com.effecitveobjectivec.queue", NULL);    
+dispatch_queue_t queue = dispatch_queue_create("com.effecitveobjectivec.queue", NULL);    
 dispatch_apply(10, queue, ^(size_t) {
     // Perform Task：0~9
 });
@@ -850,8 +835,7 @@ dispatch_apply(10, queue, ^(size_t) {
 **dispatch_once** 函数：
 
 ```objective-c
-_dispatch_once(dispatch_once_t *predicate,
-		       dispatch_block_t block)
+_dispatch_once(dispatch_once_t *predicate, dispatch_block_t block)
 ```
 
 该函数保证相关的块必定会执行，且仅执行一次。首次调用该函数时，必然会执行块中的代码，最重要的一点在于，**此操作完全是线程安全的**。
@@ -873,8 +857,8 @@ _dispatch_once(dispatch_once_t *predicate,
 
 #### 要点
 
-- 经常需要编写只需执行一次的线程安全代码。通过 GCD 所提供的 **dispatch_once** 函数，很容易就能实现此功能。
-- 标记应该声明在 `static` 或 `global` 作用域中，这样的话，在把只需执行一次的 block 传给**dispatch_once** 函数时，传进去的标记也是相同的。
+- 经常需要编写只需执行一次的线程安全代码。通过 GCD 所提供的 `dispatch_once` 函数，很容易就能实现此功能。
+- 标记应该声明在 `static` 或 `global` 作用域中，这样的话，在把只需执行一次的 block 传给 `dispatch_once` 函数时，传进去的标记也是相同的。
 
 
 

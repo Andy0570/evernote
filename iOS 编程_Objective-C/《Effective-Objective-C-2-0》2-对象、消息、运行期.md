@@ -39,7 +39,7 @@ NSString *lastName = [person lastName];
 #### @synthesize：指定实例变量的名字
 
 ```objective-c
-// 将生成的实例变量命名为_myFirstName与_myLastName
+// 将生成的实例变量命名为 _myFirstName 与 _myLastName
 @implementation EOCPerson
 @synthesize firstName = _myFirstName;
 @synthesize lastName  = _myLastName;
@@ -77,7 +77,7 @@ NSString *lastName = [person lastName];
 * **assign**：设置方法只会执行针对“纯量类型”（scalar type，例如 CGFloat 或 NSInteger 等）的简单赋值操作。
 * **strong**：此特质表明该属性定义了一种“拥有关系”（owning relationship)。为这种属性设置新值时，设置方法会先保留新值，并释放旧值，然后再将新值设置上去。
 * **weak**：此特质表明该属性定义了一种“非拥有关系”（nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此特质同 **assign** 类似, 然而在属性所指的对象遭到摧毁时，属性值也会清空（nil out)。
-* **unsafe_unretained**：此特质的语义和 **assign** 相同，但是它适用于“对象类型”（object type),该特质表达一种“非拥有关系”（“不保留”，unretained),当目标对象遭到摧毁 时，属性值不会自动清空（“不安全”，unsafe)，这一点与 **weak** 有区别。
+* **unsafe_unretained**：此特质的语义和 **assign** 相同，但是它适用于“对象类型”（object type)，该特质表达一种“非拥有关系”（“不保留”，unretained)，当目标对象遭到摧毁时，属性值不会自动清空（“不安全”，unsafe)，这一点与 **weak** 有区别。
 * **copy**：此特质所表达的所属关系与 **strong** 类似。然而设置方法并不保留新值，而是将其拷贝（copy）。当属性类型为 `NSString *` 时，经常用此特质来保护其封装性，以返回不可变对象。涉及到深拷贝与浅拷贝的问题。
 
 ##### 方法名
@@ -133,9 +133,9 @@ NSString *lastName = [person lastName];
 ### 第8条：理解“对象等同性”这一概念
 
 * `==` 操作比较的是两个指针本身。
-* 应该用 NSObject 协议中的 `isEqual`  方法判断两个对象的等同性。
+* 应该用 `NSObject` 协议中的 `isEqual`  方法判断两个对象的等同性。
 
-NSObject 协议中判断两个对象的等同性的关键方法：
+`NSObject` 协议中判断两个对象的等同性的关键方法：
 
 ```objective-c
 // 默认实现：当且仅当其“指针值"完全相等时，这两个对象才相等。
@@ -196,12 +196,9 @@ NSObject 协议中判断两个对象的等同性的关键方法：
  把这种对象添加到collection中时，也会产生性能问题
  */
 - (NSUInteger)hash {
-    NSString *stringToHash =
-        [NSString stringWithFormat:@"%@:%@:%lu",
-            _firstName, _lastName, _age];
+    NSString *stringToHash = [NSString stringWithFormat:@"%@:%@:%lu", _firstName, _lastName, _age];
     return [stringToHash hash];
 }
-
 
 /*
  此方法既能保持较高效率，又能使生成的哈希码至少位于一定范围之内，而不会过于频繁地重复。
@@ -319,7 +316,10 @@ typedef NS_ENUM(NSUInteger, EOCEmployeeType) {
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) NSUInteger age;
 
+// Helper for creating Employee objects
 + (EOCEmployee *)employeeWithType:(EOCEmployeeType)type;
+
+// Make Employees do their respective day's work
 - (void)doADayWork;
 
 @end
@@ -473,8 +473,8 @@ Objective-C 运行环境的其他函数：
 /*
   如果待发送的消息要返回结构体，那么可交由此函数处理。
 
-  只有当CPU的寄存器能够容纳得下消息返回类型时，这个函数才能处理此消息。
-  若是返回值无法容纳于CPU寄存器中（比如说返回的结构体太大了)，那么就由另一个函数执行派发。
+  只有当 CPU 的寄存器能够容纳得下消息返回类型时，这个函数才能处理此消息。
+  若是返回值无法容纳于 CPU 寄存器中（比如说返回的结构体太大了)，那么就由另一个函数执行派发。
   此时，那个函数会通过分配在栈上的某个变量来处理消息所返回的结构体。
  */
 void objc_msgSend_stret(id self, SEL op, ...);
@@ -493,7 +493,7 @@ long double objc_msgSend_fpret(id self, SEL op, ...);
 
 ```objective-c
 /*
- 如果要给超类发消息，例如 [super message:parameter],那么就交由此函数处理。
+ 如果要给超类发消息，例如 [super message:parameter]，那么就交由此函数处理。
  
  也有另外两个与 objc_msgSend_stret 和 objc_msgSend_fpret 等效的函数，
  用于处理发给 super 的相应消息。
@@ -527,7 +527,7 @@ id objc_msgSendSuper(struct objc_super *super, SEL op, ...);
 第二阶段，涉及**完整的消息转发机制**（full forwarding mechanism)。如果运行期系统已经把第一阶段执行完了，那么接收者自己就无法再以动态新增方法的手段来响应包含该选择子的消息了。此时，运行期系统会请求接收者以其他手段来处理与消息相关的方法调用。细分为两小步：
 
 * 首先，请接收者看看有没有其他对象能处理这条消息。若有，则运行期系统会把消息转给那个对象，于是消息转发过程结束，一切如常。
-* 若没有**备援的接收者**（replacement receiver)，则启动完整的消息转发机制，运行期系统会把与消息有关的全部细节都封装到 `NSInvocation` 对象中，再给接收者最后一次机会，令其设法解决当前 还未处理的这条消息。
+* 若没有**备援的接收者**（replacement receiver)，则启动完整的消息转发机制，运行期系统会把与消息有关的全部细节都封装到 `NSInvocation` 对象中，再给接收者最后一次机会，令其设法解决当前还未处理的这条消息。
 
 #### 动态方法解析
 
@@ -537,7 +537,7 @@ id objc_msgSendSuper(struct objc_super *super, SEL op, ...);
 + (BOOL)resolveInstanceMethod:(SEL)sel;
 ```
 
-该方法的参数就是那个未知的选择子，其返回值为 `Boolean` 类型，表示这个类是否能新增一个实例方法用以处理此选择子。在继续往下执行转发机制之前，本类有机会新增一个处理此选择子的方法。假如尚未实现的方法不是**实例方法**而是**类方法**，那么运行期系统就会调 用另外一个方法，该方法与 `resolvelnstanceMethod:` 类似，叫做 `resolveClassMethod:`。
+该方法的参数就是那个未知的选择子，其返回值为 `Boolean` 类型，表示这个类是否能新增一个实例方法用以处理此选择子。在继续往下执行转发机制之前，本类有机会新增一个处理此选择子的方法。假如尚未实现的方法不是**实例方法**而是**类方法**，那么运行期系统就会调用另外一个方法，该方法与 `resolvelnstanceMethod:` 类似，叫做 `resolveClassMethod:`。
 
 **使用这种办法的前提**：相关方法的实现代码已经写好，只等着运行的时候动态插在类里面就可以了。此方案常用来实现 `@dynamic` 属性：
 
@@ -573,11 +573,11 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
 - (id)forwardingTargetForSelector:(SEL)aSelector;
 ```
 
-该方法参数代表未知的选择子，若当前接收者能找到备援对象，则将其返回，若找不到， 就返回nil。通过此方案，我们可以用 “组合”（composition）来模拟出 “多重继承”（multiple inheritance）的某些特性。在一个对象内部，可能还有一系列其他对象，该对象可经由此方法将能够处理某选择子的相关内部对象返回，这样的话，在外界看来，好像是该对象亲自处理了这些消息似的。
+该方法参数代表未知的选择子，若当前接收者能找到备援对象，则将其返回，若找不到， 就返回 `nil`。通过此方案，我们可以用 “组合”（composition）来模拟出 “多重继承”（multiple inheritance）的某些特性。在一个对象内部，可能还有一系列其他对象，该对象可经由此方法将能够处理某选择子的相关内部对象返回，这样的话，在外界看来，好像是该对象亲自处理了这些消息似的。
 
 #### 完整的消息转发机制
 
-首先创建 **NSInvocation** 对象，把与尚未处理的那条消息有关的全部细节都封于其中。 此对象包含选择子、目标（target）及参数。在触发 `NSInvocation` 对象时，“消息派发系统” (message-dispatch system）将亲自出马，把消息指派给目标对象。
+首先创建 `NSInvocation` 对象，把与尚未处理的那条消息有关的全部细节都封于其中。 此对象包含选择子、目标（target）及参数。在触发 `NSInvocation` 对象时，“消息派发系统” (message-dispatch system）将亲自出马，把消息指派给目标对象。
 
 ```objective-c
 - (void)forwardInvocation:(NSInvocation *)anInvocation;
@@ -591,7 +591,7 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-10ed9ec668fbef9e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-接收者在每一步中均有机会处理消息。步骤越往后，处理消息的代价就越大。最好能在第一步就处理完，这样的话，运行期系统就可以将此方法缓存起来了。如果这个类的实例稍后还收到同名选择子，那么根本无须启动消息转发流程。若想在第三步里把消息转给备援的接收者，那还不如把转发操作提前到第二步。因为第三步只是修改了调用目标，这项改动放在第二步执行会更为简单，不然的话，还得创建并处理完整的 **NSInvocation** 。
+接收者在每一步中均有机会处理消息。步骤越往后，处理消息的代价就越大。最好能在第一步就处理完，这样的话，运行期系统就可以将此方法缓存起来了。如果这个类的实例稍后还收到同名选择子，那么根本无须启动消息转发流程。若想在第三步里把消息转给备援的接收者，那还不如把转发操作提前到第二步。因为第三步只是修改了调用目标，这项改动放在第二步执行会更为简单，不然的话，还得创建并处理完整的 `NSInvocation` 。
 
 #### 以完整的例子演示动态方法解析
 
@@ -778,20 +778,18 @@ method_exchangeImplementations(originalMethod, swappedMethod);
 
 @implementation NSString (EOCMyAdditions)
 - (NSString *)eoc_myLowercaseString {
-    NSString *lowercase = [self eoc_myLowercaseString];
+    NSString *lowercase = [self eoc_myLowercaseString]; // #1
     NSLog(@"%@ => %@", self, lowercase);
     return lowercase;
 }
 @end
 
 // *************************************************************
-// 在运行期，eoc_myLowercaseString 择子实际上对应于原有的 owercaseString 法实现。
+// #1 在运行期，eoc_myLowercaseString 选择子实际上对应于原有的 owercaseString 法实现。
 Method originalMethod =
-class_getClassMethod([NSString class],
-                     @selector(lowercaseString));
+		class_getClassMethod([NSString class], @selector(lowercaseString));
 Method swappedMethod =
-class_getClassMethod([NSString class],
-                     @selector(eoc_myLowercaseString));
+		class_getClassMethod([NSString class], @selector(eoc_myLowercaseString));
 method_exchangeImplementations(originalMethod, swappedMethod);
 ```
 

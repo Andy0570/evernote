@@ -271,13 +271,13 @@
 
 
 ```objective-c
+// 在 NSCalendar 中创建分类，以返回包含各个月份名称的字符串数组。
+
 //  NSCalendar+EOC_Additions.h
 #import <Foundation/Foundation.h>
 
 @interface NSCalendar (EOC_Additions)
 @property (nonatomic, strong, readonly) NSArray *eoc_allMonths;
-
-- ()
 @end
 
 //  NSCalendar+EOC_Additions.m

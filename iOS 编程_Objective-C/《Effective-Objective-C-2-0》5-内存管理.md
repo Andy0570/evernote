@@ -13,7 +13,7 @@
   - (oneway void)release OBJC_ARC_UNAVAILABLE;
   - (instancetype)autorelease OBJC_ARC_UNAVAILABLE;
   - (NSUInteger)retainCount OBJC_ARC_UNAVAILABLE;
-
+  
   - (struct _NSZone *)zone OBJC_ARC_UNAVAILABLE;
   ```
 
@@ -164,7 +164,7 @@ number = nil;  // 避免悬挂指针（指向无效对象的指针）
 
 ### 第31条：在 dealloc 方法中只释放引用并解除监听
 
-* `dealloc`  方法主要用于释放对象所拥有的引用（即释放所有 Objective-C 对象），ARC 会通过自动生成的 .cxx_destruct 方法在 `dealloc` 中自动添加释放代码。
+* `dealloc`  方法主要用于释放对象所拥有的引用（即释放所有 Objective-C 对象），ARC 会通过自动生成的 `.cxx_destruct` 方法在 `dealloc` 中自动添加释放代码。
 * 非 Objective-C 对象（如 **CoreFoundation** 对象）则必须手工释放。
 * 还需要清理观测行为（observation behavior），注销通知。
 * 开销较大或系统内稀缺资源不应在 `dealloc` 中释放，当应用程序用完资源后应及时释放，还有一个原因是：系统并不保证每个创建出来的对象的 `dealloc` 都会执行。
@@ -183,7 +183,7 @@ number = nil;  // 避免悬挂指针（指向无效对象的指针）
       /** clean up resoureces */
       _close = YES;
   }
-
+  
   - (void)dealloc {
       if (!_close) {
           NSLog(@"ERROR:close was not called before dealloc");
@@ -194,7 +194,7 @@ number = nil;  // 避免悬挂指针（指向无效对象的指针）
 
 #### 要点
 
-* 在 `dealloc` 方法里，应该做的事情就是释放指向其它对象的引用，并取消原来订阅的"键值观测"（KVO）或 **NSNotificationCenter** 等通知，不要做其他事情。
+* 在 `dealloc` 方法里，应该做的事情就是释放指向其它对象的引用，并取消原来订阅的"键值观测"（KVO）或 `NSNotificationCenter` 等通知，不要做其他事情。
 * 如果对象持有文件描述符等系统资源，那么应该专门编写一个方法来释放此种资源。这样的类要和其使用者约定：用完资源后必须调用 `close` 方法。
 * 执行异步任务的方法不应在 `dealloc` 里调用；只能在正常状态下执行的那些方法也不应在 `dealloc` 里调用，因为此时对象已处于正在回收的状态了。
 
@@ -304,7 +304,7 @@ for (NSDictionary *record in databaseRecords) {
 
 ### 第35条：用“僵尸对象”调试内存管理问题
 
-向业已回收的对象发送消息是不安全的，可行与否完全取决于**对象所占内存有没有为其他内容所覆写**。
+向业已回收的对象发送消息是不安全的，可行与否完全取决于**对象所占内存有没有被其他内容所覆写**。
 
 #### 调试内存管理的最佳方式：僵尸对象（Zombie Object）
 

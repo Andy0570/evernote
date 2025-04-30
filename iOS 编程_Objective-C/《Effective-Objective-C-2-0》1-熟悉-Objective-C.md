@@ -6,17 +6,17 @@
 
 * Objective-C 语言在 C 语言基础上添加了面向对象特性。
 * Objective-C 语言由 [Smalltalk](https://zh.wikipedia.org/wiki/Smalltalk) 演化而来，后者是消息型语言的鼻祖。
-* Objective-C 与 C++、Java 等面向对象语言类似，但是在语法上使用 **消息结构** （messaging structure），而非 **函数调用** （function calling）。
+* Objective-C 与 C++、Java 等面向对象语言类似，但是在语法上使用**消息结构** （messaging structure），而非**函数调用** （function calling）。
 
 
   ```objective-c
-  // Message (Objective-C)
-  Object *obj = [Object new];
-  [obj performWith:parameter1 and:parameter2];
+// Messaging structure (Objective-C)
+Object *obj = [Object new];
+[obj performWith:parameter1 and:parameter2];
 
-  // Function calling (C++)
-  Object *obj = new Object;
-  obj ->perform(parameter1, parameter2)
+// Function calling (C++)
+Object *obj = new Object;
+obj ->perform(parameter1, parameter2)
   ```
 
 * 区别：使用**消息结构**的语言，其运行时所应执行的代码由**运行环境**来决定；而使用**函数调用**的语言，则由**编译器**决定。
@@ -30,12 +30,12 @@
 #### 要点
 
 * Objective-C 为 C 语言添加了面向对象特性，是其超集。Objective-C 使用动态绑定的消息结构，也就是说，在运行时才会检查对象类型。接收一条消息之后，究竟应执行何种代码，由运行期环境而非编译器来决定。
-* 理解C语言的核心概念有助于写好 Objective-C 程序。尤其要掌握内存模型与指针。
+* 理解 C 语言的核心概念有助于写好 Objective-C 程序。尤其要掌握内存模型与指针。
 
 
 
 
-### 第2条：在类的头文件中尽量少引入其他头文件。
+### 第2条：在类的头文件中尽量少引入其他头文件
 
 **前向声明**：在编译一个使用了 EOCPerson 类的文件时，不需要知道 EOCEmployer 类的全部细节，只需要知道有一个类名叫 EOCEmployer 就好。
 
@@ -165,12 +165,12 @@ NSURL *url = @@"http://example.com";
 
 * 应该使用字面量语法来创建字符串、数值、数组、字典。与创建此类对象的常规方法相比，这么做更加简明扼要。
 * 应该通过取下标操作来访问数组下标或字典中的键所对应的元素。
-* 用字面量语法创建数组或字典时，若值中有 nil，则会抛出异常。因此，务必确保值里不含 nil。
+* 用字面量语法创建数组或字典时，若值中有 `nil`，则会抛出异常。因此，务必确保值里不含 `nil`。
 
 
 
 
-### 第4条：多用类型常量，少用 #define 预处理指令
+### 第4条：多用类型常量，少用 `#define` 预处理指令
 
 * `#define` 预处理指令只是简单的替换，定义出来的常量**没有类型信息**。
 
@@ -183,9 +183,9 @@ NSURL *url = @@"http://example.com";
 static const NSTimeInterval KAnimationDuration = 0.3;
 ```
 
-常用的命名法：若常量局限于**实现文件**之内，则在前面加字母 K；若常量在类之外可见，则通常以类名为前缀。
+常用的命名法：若常量局限于**实现文件**之内，则在前面加字母 `K`；若常量在类之外可见，则通常以类名为前缀。
 
-**const**：如果修改由 const 修饰符所声明的变量，编译器就会报错。
+**const**：如果修改由 `const` 修饰符所声明的变量，编译器就会报错。
 
 **static**：该变量仅在定义此变量的编译单元中可见。
 
@@ -212,7 +212,11 @@ extern const NSTimeInterval EOCAnimatedViewAnimationDruation;
 // EOCAnimatedView.m
 const NSTimeInterval EOCAnimatedViewAnimationDruation = 0.3;
 ```
-> 💡推荐使用 `UIKIT_EXTERN` 关键字代替 `extern `。
+> [!TIP]
+>
+> 推荐使用 `UIKIT_EXTERN` 关键字代替 `extern`。
+
+
 
 
 #### 要点
