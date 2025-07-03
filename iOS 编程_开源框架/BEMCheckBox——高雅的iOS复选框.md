@@ -1,20 +1,16 @@
 * GitHub源码: [BEMCheckBox](https://github.com/Boris-Em/BEMCheckBox)
-* star: 2.5k
-
+* star: 2.6k
 
 
 ![](http://upload-images.jianshu.io/upload_images/2648731-8074a2c5d111ef9d?imageMogr2/auto-orient/strip%7CimageView2/2/w/650)
 
-
-
->                                     ⭐️⭐️⭐️ 
->               以下内容来源于官方源码、 README 文档、测试 Demo或个人使用总结 ！
+> [!NOTE]
 >
->  **BEMCheckBox** 和普通的UI控件用起来相差无几，本文我是对官方 **Read.me** 的翻译。
+> 以下内容来源于官方源码、 README 文档、测试 Demo 和个人使用总结 ！
+>
+> **BEMCheckBox** 和普通的 UI 控件用起来相差无几，本文我是对官方 README 的翻译。
 
-
-
-**BEMCheckBox** 是一个开源库，可以轻松地为iOS创建漂亮，高度可定制的，有动画效果的复选框。
+**BEMCheckBox** 是一个开源库，可以轻松地为 iOS 创建漂亮、高度可定制的、有动画效果的复选框。
 
 [TOC]
 
@@ -30,7 +26,7 @@
 
 ## 要求
 
-* 需要 iOS 7或更高版本，APP 样例是在 iOS 9  上创建的。
+* 需要 iOS 7 或更高版本，APP 样例是在 iOS 9  上创建的。
 
 * 需要自动引用计数（ARC）。
 
